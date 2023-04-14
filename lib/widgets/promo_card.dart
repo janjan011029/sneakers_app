@@ -8,11 +8,22 @@ class PromoCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 200,
+      height: 170,
       width: double.infinity,
       decoration: BoxDecoration(
-          color: Colors.grey[200],
-          borderRadius: const BorderRadius.all(Radius.circular(20))),
+        color: Colors.grey[100],
+        borderRadius: const BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 2), // changes position of shadow
+          ),
+        ],
+      ),
       child: Row(
         children: [
           Padding(

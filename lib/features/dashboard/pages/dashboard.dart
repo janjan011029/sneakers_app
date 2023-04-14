@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sneakers_app/features/account/pages/account_page.dart';
 
 import '../../Item/pages/items_page.dart';
-import '../../cart/pages/cart_page.dart';
 import '../../favorite/pages/favorite_page.dart';
 import '../../home/pages/home_page.dart';
 
@@ -20,7 +20,7 @@ class _DashboardState extends State<Dashboard> {
     const HomePage(),
     const ItemsPage(),
     const FavoritePage(),
-    const CartPage(),
+    const AccountPage(),
   ];
 
   void _onPageChange(int index) {
@@ -73,9 +73,9 @@ class _DashboardState extends State<Dashboard> {
             ),
             BottomNavigationBarItem(
               icon: Icon(_currentIndex == 3
-                  ? Icons.shopping_cart
-                  : Icons.shopping_cart_outlined),
-              label: 'Cart',
+                  ? Icons.manage_accounts
+                  : Icons.manage_accounts_outlined),
+              label: 'Account',
             ),
           ],
         ),

@@ -1,4 +1,3 @@
-import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/widgets/shoe_card.dart';
@@ -17,13 +16,17 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
+        backgroundColor: Colors.white,
         drawer: const NavigationDrawer(),
         appBar: AppBar(
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 10),
               child: GestureDetector(
-                  onTap: () {}, child: const Icon(Icons.search)),
+                  onTap: () {
+                    context.push('/cart');
+                  },
+                  child: const Icon(Icons.shopping_cart_outlined)),
             ),
           ],
           centerTitle: true,
@@ -39,26 +42,25 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SizedBox(height: 5),
-              CarouselSlider(
-                items: const [
-                  PromoCard(),
-                  PromoCard(),
-                  PromoCard(),
-                ],
-                options: CarouselOptions(
-                  height: 200,
-                  padEnds: false,
-                  pageSnapping: false,
-                  viewportFraction: 1,
-                ),
-              ),
-              const SizedBox(height: 15),
+              // CarouselSlider(
+              //   items: const [
+              //     PromoCard(),
+              //   ],
+              //   options: CarouselOptions(
+              //     height: 150,
+              //     padEnds: false,
+              //     pageSnapping: false,
+              //     viewportFraction: 1,
+              //   ),
+              // ),
+              const PromoCard(),
+              const SizedBox(height: 10),
+
               const Text(
                 'NEW ARRIVALS',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 16,
+                  fontSize: 14,
                 ),
               ),
               const SizedBox(height: 10),

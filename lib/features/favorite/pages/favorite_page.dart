@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../../widgets/shoe_card.dart';
 
@@ -16,8 +17,18 @@ class _FavoritePageState extends State<FavoritePage> {
       child: Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.black,
-          title: const Text('Favorite Shoe\'s'),
+          title: const Text('Favorite'),
           elevation: 0,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                  onTap: () {
+                    context.push('/cart');
+                  },
+                  child: const Icon(Icons.shopping_cart_outlined)),
+            ),
+          ],
         ),
         body: Padding(
           padding: const EdgeInsets.all(5.0),

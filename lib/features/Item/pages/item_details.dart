@@ -10,7 +10,7 @@ class ItemDetails extends StatefulWidget {
 }
 
 class _ItemDetailsState extends State<ItemDetails> {
-  final List sizes = [32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45];
+  final List sizes = [6, 7, 8, 9, 10, 11];
 
   @override
   Widget build(BuildContext context) {
@@ -26,6 +26,18 @@ class _ItemDetailsState extends State<ItemDetails> {
             widget.title,
             style: const TextStyle(color: Colors.black),
           ),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 10),
+              child: GestureDetector(
+                onTap: () {},
+                child: const Icon(
+                  Icons.favorite_outline,
+                  color: Colors.black,
+                ),
+              ),
+            )
+          ],
         ),
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -34,26 +46,15 @@ class _ItemDetailsState extends State<ItemDetails> {
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Hero(
-                  tag: 'sample',
-                  child: Container(
-                    height: 250,
-                    width: double.infinity,
-                    decoration: BoxDecoration(
-                      color: Colors.grey[200],
-                      image: const DecorationImage(
-                        image: AssetImage('assets/air_max.png'),
-                        fit: BoxFit.none,
-                      ),
-                    ),
-                  ),
-                ),
+                _renderImage(),
                 const SizedBox(height: 10),
                 Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      _renderRating(context),
+                      const SizedBox(height: 5),
                       _renderDescription(context),
                       const SizedBox(height: 10),
                       _renderPickColor(context),
@@ -64,40 +65,83 @@ class _ItemDetailsState extends State<ItemDetails> {
                 ),
               ],
             ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text('Price',
-                          style: Theme.of(context).textTheme.bodyMedium),
-                      Text(
-                        '\$99',
-                        style:
-                            Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: RoundedButton(
-                        onPressed: () {},
-                        title: "Add to Cart",
-                        color: Colors.black,
-                      ),
+            _renderTotal(context),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column _renderRating(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Rating',
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            for (var x = 0; x <= 3; x++)
+              const Icon(
+                Icons.star,
+                color: Colors.yellow,
+              ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Padding _renderTotal(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text('Price', style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                '\$99',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: 25,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
                     ),
-                  ),
-                ],
+              ),
+            ],
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: RoundedButton(
+                onPressed: () {},
+                title: "Add to Cart",
+                color: Colors.black,
               ),
             ),
-          ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Hero _renderImage() {
+    return Hero(
+      tag: 'sample',
+      child: Container(
+        height: 250,
+        width: double.infinity,
+        decoration: BoxDecoration(
+          color: Colors.grey[200],
+          image: const DecorationImage(
+            image: AssetImage('assets/air_max.png'),
+            fit: BoxFit.none,
+          ),
         ),
       ),
     );

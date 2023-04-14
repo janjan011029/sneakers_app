@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../../widgets/rounded_button.dart';
+import '../widgets/cart_item.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -22,46 +23,44 @@ class _CartPageState extends State<CartPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              color: Colors.blue,
-              width: double.infinity,
-              height: 150,
-            ),
-            Padding(
-              padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    children: [
-                      Text('Total',
-                          style: Theme.of(context).textTheme.bodyMedium),
-                      Text(
-                        '\$999',
-                        style:
-                            Theme.of(context).textTheme.headlineLarge?.copyWith(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.black,
-                                ),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 15),
-                      child: RoundedButton(
-                        onPressed: () {},
-                        title: "Check-out",
-                        color: Colors.red,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
+            const CartItem(),
+            _renderTotal(context),
           ],
         ),
+      ),
+    );
+  }
+
+  Padding _renderTotal(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Column(
+            children: [
+              Text('Total', style: Theme.of(context).textTheme.bodyMedium),
+              Text(
+                '\$999',
+                style: Theme.of(context).textTheme.headlineLarge?.copyWith(
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black,
+                    ),
+              ),
+            ],
+          ),
+          Expanded(
+            child: Padding(
+              padding: const EdgeInsets.only(left: 15),
+              child: RoundedButton(
+                onPressed: () {},
+                title: "Check-out",
+                color: Colors.black,
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

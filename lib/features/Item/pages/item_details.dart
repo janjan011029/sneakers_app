@@ -1,0 +1,244 @@
+import 'package:flutter/material.dart';
+import 'package:sneakers_app/widgets/rounded_button.dart';
+
+class ItemDetails extends StatefulWidget {
+  final String title;
+  const ItemDetails({super.key, required this.title});
+
+  @override
+  State<ItemDetails> createState() => _ItemDetailsState();
+}
+
+class _ItemDetailsState extends State<ItemDetails> {
+  final List sizes = [32, 33, 34, 35, 36, 37, 38, 39, 41, 42, 43, 44, 45];
+
+  @override
+  Widget build(BuildContext context) {
+    return SafeArea(
+      child: Scaffold(
+        appBar: AppBar(
+          elevation: 0,
+          backgroundColor: Colors.white,
+          leading: const BackButton(
+            color: Colors.black,
+          ),
+          title: Text(
+            widget.title,
+            style: const TextStyle(color: Colors.black),
+          ),
+        ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Hero(
+                  tag: 'sample',
+                  child: Container(
+                    height: 250,
+                    width: double.infinity,
+                    decoration: BoxDecoration(
+                      color: Colors.grey[200],
+                      image: const DecorationImage(
+                        image: AssetImage('assets/air_max.png'),
+                        fit: BoxFit.none,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _renderDescription(context),
+                      const SizedBox(height: 10),
+                      _renderPickColor(context),
+                      const SizedBox(height: 10),
+                      _renderSizePicker(context),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Column(
+                    children: [
+                      Text('Price',
+                          style: Theme.of(context).textTheme.bodyMedium),
+                      Text(
+                        '\$99',
+                        style:
+                            Theme.of(context).textTheme.headlineLarge?.copyWith(
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black,
+                                ),
+                      ),
+                    ],
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(left: 15),
+                      child: RoundedButton(
+                        onPressed: () {},
+                        title: "Add to Cart",
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Column _renderSizePicker(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Size',
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 5),
+        SizedBox(
+          height: 50,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            padding: const EdgeInsets.all(2),
+            shrinkWrap: true,
+            itemCount: sizes.length,
+            itemBuilder: (context, index) {
+              if (sizes.isNotEmpty) {
+                return Padding(
+                  padding: const EdgeInsets.only(right: 5),
+                  child: Container(
+                    height: 50,
+                    width: 50,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10),
+                      border: Border.all(),
+                    ),
+                    child: Center(
+                      child: Text(sizes[index].toString(),
+                          style: Theme.of(context).textTheme.bodyMedium),
+                    ),
+                  ),
+                );
+              }
+
+              return const Text('No Data');
+            },
+          ),
+        )
+
+        //     Padding(
+        //       padding: const EdgeInsets.all(3.0),
+        //       child: Container(
+        //         height: 50,
+        //         width: 50,
+        //         decoration: BoxDecoration(
+        //           borderRadius: BorderRadius.circular(10),
+        //           border: Border.all(),
+        //           color: Colors.black,
+        //         ),
+        //         child: Center(
+        //           child: Text(
+        //             '33',
+        //             style: Theme.of(context)
+        //                 .textTheme
+        //                 .bodyMedium
+        //                 ?.copyWith(color: Colors.white),
+        //           ),
+        //         ),
+        //       ),
+        //     ),
+      ],
+    );
+  }
+
+  Column _renderPickColor(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Pick Color',
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 5),
+        Row(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  border: Border.all(color: Colors.blue),
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.orange,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(3.0),
+              child: Container(
+                height: 30,
+                width: 30,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.red,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ],
+    );
+  }
+
+  Column _renderDescription(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          'Description',
+          style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                fontWeight: FontWeight.bold,
+              ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+          style: Theme.of(context).textTheme.bodySmall,
+        ),
+      ],
+    );
+  }
+}

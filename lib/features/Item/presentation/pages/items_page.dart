@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
+import '../../../cart/widgets/cart_item.dart';
+
 class ItemsPage extends StatefulWidget {
   const ItemsPage({super.key});
 
@@ -26,6 +28,11 @@ class _ItemsPageState extends State<ItemsPage> {
                   },
                   child: const Icon(Icons.shopping_cart_outlined)),
             ),
+          ],
+        ),
+        body: Column(
+          children: const [
+            CartItem(),
           ],
         ),
       ),

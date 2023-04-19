@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../../../widgets/rounded_button.dart';
-import '../widgets/cart_item.dart';
+import '../../../../widgets/rounded_button.dart';
+import '../../widgets/cart_item.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});

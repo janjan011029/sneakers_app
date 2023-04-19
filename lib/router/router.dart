@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:sneakers_app/features/cart/pages/cart_page.dart';
+import 'package:sneakers_app/features/cart/presentation/pages/cart_page.dart';
 
 import '../error_screen.dart';
 import '../features/Item/pages/item_details.dart';
-import '../features/auth/pages/login.dart';
-import '../features/auth/state/auth_state.dart';
+import '../features/auth/presentation/blocs/auth_state.dart';
+import '../features/auth/presentation/pages/login.dart';
 import '../features/dashboard/pages/dashboard.dart';
 
 class MyRouter {

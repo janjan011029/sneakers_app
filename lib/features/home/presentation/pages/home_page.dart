@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/widgets/shoe_card.dart';
 
-import '../../../widgets/promo_card.dart';
+import '../../../../widgets/promo_card.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sneakers_app/features/account/pages/account_page.dart';
+import 'package:sneakers_app/features/account/presentation/pages/account_page.dart';
 
-import '../../Item/pages/items_page.dart';
-import '../../favorite/pages/favorite_page.dart';
-import '../../home/pages/home_page.dart';
+import '../../../Item/presentation/pages/items_page.dart';
+import '../../../favorite/presentation/pages/favorite_page.dart';
+import '../../../home/presentation/pages/home_page.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});

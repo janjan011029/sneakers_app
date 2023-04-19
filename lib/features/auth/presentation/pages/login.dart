@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/api/client.dart';
 
-import '../../../widgets/rounded_button.dart';
-import '../../../widgets/text_form_field_label.dart';
+import '../../../../widgets/rounded_button.dart';
+import '../../../../widgets/text_form_field_label.dart';
 
 class Login extends StatefulWidget {
   const Login({super.key});

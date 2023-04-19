@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../../widgets/shoe_card.dart';
+import '../../../cart/widgets/cart_item.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
@@ -30,19 +30,16 @@ class _FavoritePageState extends State<FavoritePage> {
             ),
           ],
         ),
-        body: Padding(
-          padding: const EdgeInsets.all(5.0),
-          child: GridView.count(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
+        body: SingleChildScrollView(
+          child: Column(
             children: [
-              for (var x = 0; x <= 10; x++)
-                ShoeCard(
-                  assetName: 'assets/air_max.png',
-                  title: '\$99.00',
-                  isFavorite: true,
-                  onTap: () {},
+              for (var i = 0; i <= 5; i++)
+                CartItem(
+                  isLike: true,
+                  isShop: true,
+                  onClick: () {
+                    context.push('/item_details/Nike Air Max Pulse');
+                  },
                 ),
             ],
           ),

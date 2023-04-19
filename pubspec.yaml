@@ -44,6 +44,7 @@ dependencies:
   dio: ^5.1.1
   carousel_slider: ^4.2.1
   flutter_bloc: ^8.1.2
+  flutter_slidable: ^3.0.0
 
 dev_dependencies:
   flutter_test:
@@ -73,6 +74,8 @@ flutter:
     - assets/air_max.png
     - assets/max2.png
     - assets/jordan2.png
+    - assets/running.png
+    - assets/basketball.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

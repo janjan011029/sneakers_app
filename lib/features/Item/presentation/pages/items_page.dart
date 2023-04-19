@@ -30,10 +30,42 @@ class _ItemsPageState extends State<ItemsPage> {
             ),
           ],
         ),
-        body: Column(
-          children: const [
-            CartItem(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              // Padding(
+              //   padding: const EdgeInsets.all(8.0),
+              //   child: TextField(
+              //     decoration: InputDecoration(
+              //         border: OutlineInputBorder(
+              //           borderRadius: BorderRadius.circular(15.0),
+              //         ),
+              //         filled: true,
+              //         hintStyle: TextStyle(color: Colors.grey[800]),
+              //         hintText: "Search Item",
+              //         fillColor: Colors.white70),
+              //   ),
+              // ),
+              CartItem(
+                isShop: true,
+                onClick: () {
+                  context.push('/item_details/Nike Air Max Pulse');
+                },
+              ),
+              CartItem(
+                isShop: true,
+                onClick: () {
+                  context.push('/item_details/Nike Air Max Pulse');
+                },
+              ),
+              CartItem(
+                isShop: true,
+                onClick: () {
+                  context.push('/item_details/Nike Air Max Pulse');
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

@@ -23,7 +23,9 @@ class _CartPageState extends State<CartPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            const CartItem(),
+            CartItem(
+              onClick: () {},
+            ),
             _renderTotal(context),
           ],
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sneakers_app/widgets/shoe_card.dart';
+import 'package:sneakers_app/widgets/category.dart';
 
 import '../../../../widgets/promo_card.dart';
 
@@ -57,10 +57,10 @@ class _HomePageState extends State<HomePage> {
               const SizedBox(height: 10),
 
               const Text(
-                'NEW ARRIVALS',
+                'CATEGORY',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  fontSize: 14,
+                  fontSize: 16,
                 ),
               ),
               const SizedBox(height: 10),
@@ -71,34 +71,19 @@ class _HomePageState extends State<HomePage> {
                     mainAxisSpacing: 10,
                     crossAxisSpacing: 10,
                     children: [
-                      Hero(
-                        tag: 'sample',
-                        child: ShoeCard(
-                          assetName: 'assets/air_max.png',
-                          title: '\$99.00',
-                          onTap: () {
-                            context.push('/item_details/Nike Air Max Pulse');
-                          },
-                        ),
-                      ),
-                      ShoeCard(
+                      CategoryCard(
                         assetName: 'assets/air_max.png',
-                        title: '\$99.00',
+                        title: 'AIR FORCE',
                         onTap: () {},
                       ),
-                      ShoeCard(
-                        assetName: 'assets/air_max.png',
-                        title: '\$99.00',
+                      CategoryCard(
+                        assetName: 'assets/running.png',
+                        title: 'RUNNING',
                         onTap: () {},
                       ),
-                      ShoeCard(
-                        assetName: 'assets/air_max.png',
-                        title: '\$99.00',
-                        onTap: () {},
-                      ),
-                      ShoeCard(
-                        assetName: 'assets/air_max.png',
-                        title: '\$99.00',
+                      CategoryCard(
+                        assetName: 'assets/basketball.png',
+                        title: 'BASKETBALL',
                         onTap: () {},
                       ),
                     ],

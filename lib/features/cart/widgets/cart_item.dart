@@ -1,37 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:sneakers_app/features/cart/widgets/action_button.dart';
+import 'package:sneakers_app/features/cart/widgets/rounded_cart_button.dart';
 
 class CartItem extends StatelessWidget {
+  final bool isShop;
+  final bool isLike;
+  final VoidCallback onClick;
   const CartItem({
     super.key,
+    this.isShop = false,
+    this.isLike = false,
+    required this.onClick,
   });
 
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.all(10.0),
-      child: Container(
-        width: double.infinity,
-        height: 150,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
-          ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 2), // changes position of shadow
+      padding: const EdgeInsets.all(5.0),
+      child: InkWell(
+        onTap: onClick,
+        child: Container(
+          width: double.infinity,
+          height: 150,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: const BorderRadius.all(
+              Radius.circular(20),
             ),
-          ],
-        ),
-        child: Row(
-          children: [
-            _renderImage(),
-            _renderDetails(),
-          ],
+            boxShadow: [
+              BoxShadow(
+                color: Colors.grey.withOpacity(0.5),
+                spreadRadius: 1,
+                blurRadius: 2,
+                offset: const Offset(0, 2), // changes position of shadow
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              _renderImage(),
+              _renderDetails(),
+            ],
+          ),
         ),
       ),
     );
@@ -74,7 +84,12 @@ class CartItem extends StatelessWidget {
                 ),
               ],
             ),
-            _renderAction(),
+            isShop
+                ? RoundedCartButton(
+                    isLiked: isLike,
+                    onClick: () {},
+                  )
+                : _renderAction(),
           ],
         ),
       ),
@@ -86,7 +101,10 @@ class CartItem extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: const [
         ActionButton(
-          icon: Icon(Icons.remove),
+          icon: Icon(
+            Icons.remove,
+            color: Colors.white,
+          ),
         ),
         Text(
           '1',
@@ -96,7 +114,10 @@ class CartItem extends StatelessWidget {
           ),
         ),
         ActionButton(
-          icon: Icon(Icons.add),
+          icon: Icon(
+            Icons.add,
+            color: Colors.white,
+          ),
         ),
       ],
     );

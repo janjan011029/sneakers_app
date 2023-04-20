@@ -19,64 +19,60 @@ class _LoginState extends State<Login> {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Padding(
-          padding: const EdgeInsets.only(top: 50),
-          child: Column(
-            children: [
-              Container(
-                padding: const EdgeInsets.only(top: 50),
-                height: 180,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                  image: AssetImage('assets/nike.png'),
-                  fit: BoxFit.fitHeight,
-                )),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(40.0),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    // const Label(title: 'Email Address'),
-                    const TextFormFieldLabel(
-                      labelTitle: 'Username',
-                      hintText: 'Username...',
-                    ),
-                    const SizedBox(height: 10),
-                    TextFormFieldLabel(
-                      hintText: 'Enter password...',
-                      labelTitle: 'Password',
-                      isObscure: isView,
-                      isPassword: true,
-                      onTap: () {
-                        setState(() {
-                          isView = !isView;
-                        });
-                      },
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 35),
-                child: Container(
-                  padding: const EdgeInsets.only(top: 2, left: 1),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            Container(
+              height: 180,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                image: AssetImage('assets/nike.png'),
+                fit: BoxFit.fitHeight,
+              )),
+            ),
+            Padding(
+              padding: const EdgeInsets.fromLTRB(30, 5, 30, 5),
+              child: Column(
+                children: [
+                  // const Label(title: 'Email Address'),
+                  const TextFormFieldLabel(
+                    labelTitle: 'Username',
+                    hintText: 'Username...',
                   ),
-                  child: RoundedButton(
-                    color: Colors.black,
-                    title: 'Enter',
-                    onPressed: () {
-                      context.go('/dashboard');
+                  const SizedBox(height: 10),
+                  TextFormFieldLabel(
+                    hintText: 'Enter password...',
+                    labelTitle: 'Password',
+                    isObscure: isView,
+                    isPassword: true,
+                    onTap: () {
+                      setState(() {
+                        isView = !isView;
+                      });
                     },
                   ),
+                ],
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Container(
+                padding: const EdgeInsets.only(top: 2, left: 1),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                ),
+                child: RoundedButton(
+                  color: Colors.black,
+                  title: 'Enter',
+                  onPressed: () {
+                    context.go('/dashboard');
+                  },
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

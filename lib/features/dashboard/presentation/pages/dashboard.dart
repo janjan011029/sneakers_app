@@ -4,6 +4,7 @@ import 'package:sneakers_app/features/account/presentation/pages/account_page.da
 import '../../../Item/presentation/pages/items_page.dart';
 import '../../../favorite/presentation/pages/favorite_page.dart';
 import '../../../home/presentation/pages/home_page.dart';
+import '../widgets/bottom_nav_bar.dart';
 
 class Dashboard extends StatefulWidget {
   const Dashboard({super.key});
@@ -43,41 +44,9 @@ class _DashboardState extends State<Dashboard> {
           physics: const NeverScrollableScrollPhysics(),
           children: _screen,
         ),
-        bottomNavigationBar: BottomNavigationBar(
+        bottomNavigationBar: BottomNavBar(
           currentIndex: _currentIndex,
-          selectedFontSize: 14,
-          unselectedFontSize: 14,
-          selectedItemColor: Colors.black,
-          unselectedItemColor: Colors.black26,
-          showUnselectedLabels: true,
-          unselectedLabelStyle: const TextStyle(color: Colors.black),
-          showSelectedLabels: true,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
           onTap: _onItemTap,
-          items: [
-            BottomNavigationBarItem(
-              icon: Icon(_currentIndex == 0 ? Icons.home : Icons.home_outlined),
-              label: 'Home',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(_currentIndex == 1
-                  ? Icons.shopping_bag
-                  : Icons.shopping_bag_outlined),
-              label: 'Shop',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(
-                  _currentIndex == 2 ? Icons.favorite : Icons.favorite_outline),
-              label: 'Liked',
-            ),
-            BottomNavigationBarItem(
-              icon: Icon(_currentIndex == 3
-                  ? Icons.manage_accounts
-                  : Icons.manage_accounts_outlined),
-              label: 'Account',
-            ),
-          ],
         ),
       ),
     );

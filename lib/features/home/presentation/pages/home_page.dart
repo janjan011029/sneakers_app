@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sneakers_app/features/dashboard/presentation/cubits/bottom_nav_bar_cubit.dart';
 import 'package:sneakers_app/widgets/category.dart';
 
 import '../../../../widgets/promo_card.dart';
@@ -32,7 +34,7 @@ class _HomePageState extends State<HomePage> {
           centerTitle: true,
           backgroundColor: Colors.black,
           title: const Text(
-            'Nike Clone',
+            'Sneakers App',
             style: TextStyle(fontFamily: 'Raleway'),
           ),
           elevation: 0,
@@ -42,27 +44,9 @@ class _HomePageState extends State<HomePage> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // CarouselSlider(
-              //   items: const [
-              //     PromoCard(),
-              //   ],
-              //   options: CarouselOptions(
-              //     height: 150,
-              //     padEnds: false,
-              //     pageSnapping: false,
-              //     viewportFraction: 1,
-              //   ),
-              // ),
               const PromoCard(),
               const SizedBox(height: 10),
-
-              const Text(
-                'CATEGORY',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
+              _renderCategory(),
               const SizedBox(height: 10),
               Expanded(
                 child: Center(
@@ -73,17 +57,29 @@ class _HomePageState extends State<HomePage> {
                     children: [
                       CategoryCard(
                         assetName: 'assets/air_max.png',
-                        title: 'AIR FORCE',
+                        title: 'JORDAN',
+                        onTap: () {
+                          context.read<BottomNavBarCubit>().selectPage(1);
+                        },
+                      ),
+                      CategoryCard(
+                        assetName: 'assets/basketball.png',
+                        title: 'NIKE',
                         onTap: () {},
                       ),
                       CategoryCard(
-                        assetName: 'assets/running.png',
-                        title: 'RUNNING',
+                        assetName: 'assets/air_max.png',
+                        title: 'ADIDAS',
                         onTap: () {},
                       ),
                       CategoryCard(
                         assetName: 'assets/basketball.png',
-                        title: 'BASKETBALL',
+                        title: 'PUMA',
+                        onTap: () {},
+                      ),
+                      CategoryCard(
+                        assetName: 'assets/basketball.png',
+                        title: 'FILA',
                         onTap: () {},
                       ),
                     ],
@@ -93,6 +89,16 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  Text _renderCategory() {
+    return const Text(
+      'CATEGORY',
+      style: TextStyle(
+        fontWeight: FontWeight.bold,
+        fontSize: 16,
       ),
     );
   }

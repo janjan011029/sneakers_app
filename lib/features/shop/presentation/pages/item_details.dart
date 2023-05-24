@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sneakers_app/widgets/rounded_button.dart';
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class ItemDetails extends StatefulWidget {
   final String title;
@@ -119,13 +120,35 @@ class _ItemDetailsState extends State<ItemDetails> {
             child: Padding(
               padding: const EdgeInsets.only(left: 15),
               child: RoundedButton(
-                onPressed: () {},
+                onPressed: () {
+                  ScaffoldMessenger.of(context)
+                    ..hideCurrentSnackBar()
+                    ..showSnackBar(_snackbar());
+                },
                 title: "Add to Cart",
                 color: Colors.black,
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  SnackBar _snackbar() {
+    return SnackBar(
+      /// need to set following properties for best effect of awesome_snackbar_content
+      elevation: 0,
+      showCloseIcon: false,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        color: Colors.green,
+        title: 'Successfully Added!',
+        message: 'Nike Air Max Pulse is now added to cart',
+
+        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+        contentType: ContentType.success,
       ),
     );
   }

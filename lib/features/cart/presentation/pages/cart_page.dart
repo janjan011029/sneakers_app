@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../../widgets/rounded_button.dart';
-import '../../widgets/cart_item.dart';
 
 class CartPage extends StatefulWidget {
   const CartPage({super.key});
@@ -23,9 +22,9 @@ class _CartPageState extends State<CartPage> {
         body: Column(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            CartItem(
-              onClick: () {},
-            ),
+            // CartItem(
+            //   onClick: () {},
+            // ),
             _renderTotal(context),
           ],
         ),

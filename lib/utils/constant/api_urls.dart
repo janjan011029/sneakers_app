@@ -26,5 +26,5 @@ class ApiUrls {
   static const getAllVansShoesUrl = '/search/vans';
 
   //* Get all the [Rebook] brand
-  static const getAllRebookShoesUrl = '/search/vans';
+  static const getAllRebookShoesUrl = '/search/rebook';
 }

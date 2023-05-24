@@ -1,24 +1,37 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sneakers_app/features/cart/widgets/action_button.dart';
 import 'package:sneakers_app/features/cart/widgets/rounded_cart_button.dart';
 
-class CartItem extends StatelessWidget {
-  final bool isShop;
-  final bool isLike;
-  final VoidCallback onClick;
+class CartItem extends StatefulWidget {
   const CartItem({
     super.key,
     this.isShop = false,
     this.isLike = false,
+    required this.itemName,
+    required this.price,
+    required this.img,
     required this.onClick,
   });
 
+  final bool isShop;
+  final bool isLike;
+  final String itemName;
+  final double price;
+  final String img;
+  final VoidCallback onClick;
+
+  @override
+  State<CartItem> createState() => _CartItemState();
+}
+
+class _CartItemState extends State<CartItem> {
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(5.0),
       child: InkWell(
-        onTap: onClick,
+        onTap: widget.onClick,
         child: Container(
           width: double.infinity,
           height: 150,
@@ -58,10 +71,10 @@ class CartItem extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                Text(
                   maxLines: 2,
-                  'Nike Air Max Pulse',
-                  style: TextStyle(
+                  widget.itemName,
+                  style: const TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.bold,
                     overflow: TextOverflow.ellipsis,
@@ -76,17 +89,17 @@ class CartItem extends StatelessWidget {
                       ),
                   ],
                 ),
-                const Text(
-                  '\$99',
-                  style: TextStyle(
+                Text(
+                  '\$${widget.price}',
+                  style: const TextStyle(
                     fontSize: 18,
                   ),
                 ),
               ],
             ),
-            isShop
+            widget.isShop
                 ? RoundedCartButton(
-                    isLiked: isLike,
+                    isLiked: widget.isLike,
                     onClick: () {},
                   )
                 : _renderAction(),
@@ -97,9 +110,9 @@ class CartItem extends StatelessWidget {
   }
 
   Row _renderAction() {
-    return Row(
+    return const Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-      children: const [
+      children: [
         ActionButton(
           icon: Icon(
             Icons.remove,
@@ -131,9 +144,13 @@ class CartItem extends StatelessWidget {
         borderRadius: const BorderRadius.all(
           Radius.circular(20),
         ),
-        image: const DecorationImage(
-          image: AssetImage('assets/air_max.png'),
-          fit: BoxFit.fitHeight,
+      ),
+      child: Center(
+        child: CachedNetworkImage(
+          imageUrl: widget.img,
+          progressIndicatorBuilder: (context, url, downloadProgress) =>
+              CircularProgressIndicator(value: downloadProgress.progress),
+          errorWidget: (context, url, error) => const Icon(Icons.error),
         ),
       ),
     );

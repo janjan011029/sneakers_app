@@ -3,11 +3,6 @@ import 'package:dio/dio.dart';
 class DioClient {
   final _dio = Dio();
 
-  // void getNikeShoes() async {
-  //   final response = await _dio.get('$_host/search/nike');
-  //   if (kDebugMode) print(response);
-  // }
-
   Future<Response> get(
     String url, {
     Map<String, dynamic>? queryParameters,

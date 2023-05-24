@@ -1,7 +1,9 @@
 import 'package:json_annotation/json_annotation.dart';
 
+part 'shoe_api_result.g.dart';
+
 @JsonSerializable()
-class SneakersApiModel {
+class ShoeApiResult {
   final LowestResellPrice? lowestResellPrice;
   final List<dynamic>? imageLinks;
   final String? id;
@@ -19,7 +21,7 @@ class SneakersApiModel {
   final ResellLinks? resellLinks;
   final int? goatProductId;
 
-  SneakersApiModel({
+  ShoeApiResult({
     this.lowestResellPrice,
     this.imageLinks,
     this.id,
@@ -37,28 +39,45 @@ class SneakersApiModel {
     this.resellLinks,
     this.goatProductId,
   });
+
+  factory ShoeApiResult.fromJson(Map<String, dynamic> json) =>
+      _$ShoeApiResultFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ShoeApiResultToJson(this);
 }
 
+@JsonSerializable()
 class LowestResellPrice {
   final int? stockX;
-  final int? goat;
   final int? flightClub;
+  final int? goat;
 
   LowestResellPrice({
     this.stockX,
-    this.goat,
     this.flightClub,
+    this.goat,
   });
+
+  factory LowestResellPrice.fromJson(Map<String, dynamic> json) =>
+      _$LowestResellPriceFromJson(json);
+
+  Map<String, dynamic> toJson() => _$LowestResellPriceToJson(this);
 }
 
+@JsonSerializable()
 class ResellLinks {
   final String? stockX;
-  final String? goat;
   final String? flightClub;
+  final String? goat;
 
   ResellLinks({
     this.stockX,
-    this.goat,
     this.flightClub,
+    this.goat,
   });
+
+  factory ResellLinks.fromJson(Map<String, dynamic> json) =>
+      _$ResellLinksFromJson(json);
+
+  Map<String, dynamic> toJson() => _$ResellLinksToJson(this);
 }

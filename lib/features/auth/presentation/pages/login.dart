@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sneakers_app/api/client.dart';
 
 import '../../../../widgets/rounded_button.dart';
 import '../../../../widgets/text_form_field_label.dart';
@@ -14,7 +13,6 @@ class Login extends StatefulWidget {
 
 class _LoginState extends State<Login> {
   bool isView = false;
-  final _api = DioClient();
   @override
   Widget build(BuildContext context) {
     return SafeArea(

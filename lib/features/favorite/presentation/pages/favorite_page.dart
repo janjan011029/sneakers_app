@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
-import '../../../cart/widgets/cart_item.dart';
-
 class FavoritePage extends StatefulWidget {
   const FavoritePage({super.key});
 

@@ -1,7 +1,20 @@
 import 'package:dio/dio.dart';
 
 class DioClient {
-  final _dio = Dio();
+  late final Dio _dio;
+
+  DioClient() {
+    const devUrl = 'http://192.168.1.10:4000';
+
+    _dio = Dio(
+      BaseOptions(
+        baseUrl: devUrl,
+        connectTimeout: const Duration(milliseconds: 15000),
+        receiveTimeout: const Duration(milliseconds: 15000),
+        responseType: ResponseType.json,
+      ),
+    );
+  }
 
   Future<Response> get(
     String url, {

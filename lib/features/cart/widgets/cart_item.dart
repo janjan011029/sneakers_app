@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:sneakers_app/features/cart/widgets/action_button.dart';
@@ -26,6 +28,7 @@ class CartItem extends StatefulWidget {
 }
 
 class _CartItemState extends State<CartItem> {
+  final x = Random();
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -52,7 +55,7 @@ class _CartItemState extends State<CartItem> {
           child: Row(
             children: [
               _renderImage(),
-              _renderDetails(),
+              _renderDetails(x.nextInt(5)),
             ],
           ),
         ),
@@ -60,7 +63,7 @@ class _CartItemState extends State<CartItem> {
     );
   }
 
-  Expanded _renderDetails() {
+  Expanded _renderDetails(int star) {
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.all(10.0),
@@ -82,7 +85,7 @@ class _CartItemState extends State<CartItem> {
                 ),
                 Row(
                   children: [
-                    for (var x = 0; x <= 3; x++)
+                    for (var x = 0; x <= star; x++)
                       const Icon(
                         Icons.star,
                         color: Colors.yellow,
@@ -139,14 +142,15 @@ class _CartItemState extends State<CartItem> {
   Container _renderImage() {
     return Container(
       width: 150,
-      decoration: BoxDecoration(
-        color: Colors.grey[200],
-        borderRadius: const BorderRadius.all(
+      decoration: const BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.all(
           Radius.circular(20),
         ),
       ),
       child: Center(
         child: CachedNetworkImage(
+          fit: BoxFit.fill,
           imageUrl: widget.img,
           progressIndicatorBuilder: (context, url, downloadProgress) =>
               CircularProgressIndicator(value: downloadProgress.progress),

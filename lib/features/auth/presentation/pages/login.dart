@@ -21,7 +21,7 @@ class _LoginState extends State<Login> {
       child: Scaffold(
         body: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
+          // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             Container(
               height: 180,
@@ -44,7 +44,7 @@ class _LoginState extends State<Login> {
                   TextFormFieldLabel(
                     hintText: 'Enter password...',
                     labelTitle: 'Password',
-                    isObscure: isView,
+                    isObscure: !isView,
                     isPassword: true,
                     onTap: () {
                       setState(() {
@@ -56,16 +56,12 @@ class _LoginState extends State<Login> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
               child: Container(
-                padding: const EdgeInsets.only(top: 2, left: 1),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(50),
-                ),
+                padding: const EdgeInsets.only(top: 5, left: 1),
                 child: RoundedButton(
                   color: Colors.black,
-                  title: 'Enter',
+                  title: 'Login',
                   onPressed: () {
                     context.go('/dashboard');
                   },

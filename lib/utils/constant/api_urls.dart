@@ -2,7 +2,7 @@ class ApiUrls {
   static const host = 'http://192.168.1.4:4000';
 
   //* Get all the sneakers brand
-  static const getAllBrandUrl = '/home';
+  static const getPopularShoesUrl = '/home';
 
   //* Get all the [Jordan] brand
   static const getAllJordanShoesUrl = '/search/jordan';

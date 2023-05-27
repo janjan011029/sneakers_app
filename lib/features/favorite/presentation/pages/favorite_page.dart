@@ -33,14 +33,14 @@ class _FavoritePageState extends State<FavoritePage> {
         body: const SingleChildScrollView(
           child: Column(
             children: [
-              // for (var i = 0; i <= 5; i++)
-              //   CartItem(
-              //     isLike: true,
-              //     isShop: true,
-              //     onClick: () {
-              //       context.push('/item_details/Nike Air Max Pulse');
-              //     },
-              //   ),
+              // CartItem(
+              //   itemName: '',
+              //   price: 99.00,
+              //   img: '',
+              //   isLike: true,
+              //   isShop: true,
+              //   onClick: () {},
+              // ),
             ],
           ),
         ),

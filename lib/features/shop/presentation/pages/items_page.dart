@@ -3,6 +3,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 
 import '../../../../api/client.dart';
+import '../../../../utils/constant/app_enums.dart';
+import '../../../../widgets/app_loading_shimmer.dart';
 import '../../../cart/widgets/cart_item.dart';
 import '../../repositories/shop_repository.dart';
 import '../blocs/shop_bloc.dart';
@@ -42,20 +44,30 @@ class _ItemsPageState extends State<ItemsPage> {
           ),
           body: BlocBuilder<ShopBloc, ShopState>(
             builder: (context, state) {
-              return ListView.builder(
-                itemCount: state.shoes.length,
-                itemBuilder: (context, index) {
-                  return CartItem(
-                    img: state.shoes[index].imageLinks?.first,
-                    itemName: state.shoes[index].shoeName ?? '-',
-                    price: 0.0,
-                    isShop: true,
-                    onClick: () {
-                      context.push('/item_details/Nike Air Max Pulse');
-                    },
-                  );
-                },
-              );
+              final status = state.getShoesStatus;
+              if (status == Status.success) {
+                return ListView.builder(
+                  itemCount: state.shoes.length,
+                  itemBuilder: (context, index) {
+                    return CartItem(
+                      img: state.shoes[index].thumbnail ?? '-',
+                      itemName: state.shoes[index].shoeName ?? '-',
+                      price: state.shoes[index].retailPrice?.toDouble() ?? 0.0,
+                      isShop: true,
+                      onClick: () {
+                        context.push('/item_details/Nike Air Max Pulse');
+                      },
+                    );
+                  },
+                );
+              }
+
+              if (status == Status.failure) {
+                return const Center(
+                  child: Text('No Data found'),
+                );
+              }
+              return const AppLoadingShimmer();
             },
           ),
         ),

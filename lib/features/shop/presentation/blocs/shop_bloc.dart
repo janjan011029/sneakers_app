@@ -17,6 +17,7 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
       : _iShopRepository = iShopRepository,
         super(const ShopState()) {
     on<GetShoes>(_getShoes);
+    on<GetPopularShoes>(_getPopularShoes);
   }
 
   FutureOr<void> _getShoes(GetShoes event, Emitter<ShopState> emit) async {
@@ -40,6 +41,33 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
     } catch (e) {
       emit(state.copyWith(
         getShoesStatus: Status.failure,
+        errMsg: e.toString(),
+      ));
+    }
+  }
+
+  FutureOr<void> _getPopularShoes(
+      GetPopularShoes event, Emitter<ShopState> emit) async {
+    try {
+      emit(state.copyWith(getShoesStatus: Status.loading));
+
+      final itemlist = await _iShopRepository.getPopularShoesApi();
+
+      if (itemlist.isEmpty) {
+        emit(state.copyWith(
+          getPopularShoesStatus: Status.failure,
+        ));
+      }
+
+      if (itemlist.isNotEmpty) {
+        emit(state.copyWith(
+          popularShoes: itemlist,
+          getPopularShoesStatus: Status.success,
+        ));
+      }
+    } catch (e) {
+      emit(state.copyWith(
+        getPopularShoesStatus: Status.failure,
         errMsg: e.toString(),
       ));
     }

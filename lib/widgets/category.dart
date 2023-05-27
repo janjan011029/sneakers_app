@@ -22,11 +22,11 @@ class CategoryCard extends StatelessWidget {
         children: [
           Container(
             decoration: BoxDecoration(
-              color: Colors.grey[100],
+              color: Colors.white,
               borderRadius: const BorderRadius.all(Radius.circular(15)),
               image: DecorationImage(
-                image: AssetImage(assetName),
-                fit: BoxFit.fitHeight,
+                image: NetworkImage(assetName),
+                fit: BoxFit.contain,
               ),
               boxShadow: [
                 BoxShadow(
@@ -44,34 +44,39 @@ class CategoryCard extends StatelessWidget {
               children: [
                 Container(
                   padding: const EdgeInsets.all(0),
-                  height: 40,
+                  height: 45,
                   decoration: const BoxDecoration(
                     borderRadius:
                         BorderRadius.vertical(bottom: Radius.circular(15)),
-                    color: Colors.black,
+                    color: Colors.transparent,
                   ),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Text(
-                          title,
-                          style:
-                              Theme.of(context).textTheme.labelLarge?.copyWith(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
+                      Expanded(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Text(
+                            title,
+                            style: Theme.of(context)
+                                .textTheme
+                                .labelLarge
+                                ?.copyWith(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                          ),
                         ),
                       ),
                       // const Icon(Icons.add_box_rounded, color: Colors.white),
                       Container(
                         width: 40,
-                        decoration: BoxDecoration(
-                          borderRadius: const BorderRadius.only(
+                        decoration: const BoxDecoration(
+                          borderRadius: BorderRadius.only(
                               bottomRight: Radius.circular(15)),
-                          color: Colors.grey[100],
+                          color: Colors.transparent,
                         ),
                         child: const Center(
                           child: Icon(Icons.add),

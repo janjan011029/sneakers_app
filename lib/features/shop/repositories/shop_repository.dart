@@ -18,9 +18,40 @@ class ShopRepository implements IShopRepository {
         ApiUrls.getAllNikeShoesUrl,
       );
 
-      final data = res.data as Map<String, dynamic>;
+      final data = res.data;
+      List<ShoeApiResult> shoeList = [];
 
-      return ShoeApiResult.fromJson(data) as List<ShoeApiResult>;
+      for (var x in data) {
+        final shoe = ShoeApiResult.fromJson(x);
+        shoeList.add(shoe);
+      }
+
+      return shoeList;
+    } on DioError catch (err) {
+      final errMsg = DioException.fromDioError(err).toString();
+
+      throw errMsg;
+    } catch (e) {
+      throw e.toString();
+    }
+  }
+
+  @override
+  Future<List<ShoeApiResult>> getPopularShoesApi() async {
+    try {
+      final res = await _dioClient.get(
+        ApiUrls.getPopularShoesUrl,
+      );
+
+      final data = res.data;
+      List<ShoeApiResult> shoeList = [];
+
+      for (var x in data) {
+        final shoe = ShoeApiResult.fromJson(x);
+        shoeList.add(shoe);
+      }
+
+      return shoeList;
     } on DioError catch (err) {
       final errMsg = DioException.fromDioError(err).toString();
 

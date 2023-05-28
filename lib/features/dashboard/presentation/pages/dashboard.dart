@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
+import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
 
 import '../../../shop/presentation/pages/items_page.dart';
 import '../../../account/presentation/pages/account_page.dart';
@@ -17,6 +18,7 @@ class Dashboard extends StatefulWidget {
 
 class _DashboardState extends State<Dashboard> {
   final _pageController = PageController();
+  final favoriteCubit = FavoriteCubit();
 
   final List<Widget> _screen = [
     const HomePage(),
@@ -31,8 +33,15 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => BottomNavBarCubit(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (context) => BottomNavBarCubit(),
+        ),
+        BlocProvider(
+          create: (context) => favoriteCubit,
+        ),
+      ],
       child: BlocConsumer<BottomNavBarCubit, int>(
         listenWhen: (p, c) => p != c,
         listener: (context, bottomNavBarState) {

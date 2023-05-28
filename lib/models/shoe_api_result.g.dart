@@ -29,6 +29,7 @@ ShoeApiResult _$ShoeApiResultFromJson(Map<String, dynamic> json) =>
           ? null
           : ResellLinks.fromJson(json['resellLinks'] as Map<String, dynamic>),
       goatProductId: json['goatProductId'] as int?,
+      isFavorite: json['isFavorite'] as bool?,
     );
 
 Map<String, dynamic> _$ShoeApiResultToJson(ShoeApiResult instance) =>
@@ -49,6 +50,7 @@ Map<String, dynamic> _$ShoeApiResultToJson(ShoeApiResult instance) =>
       'urlKey': instance.urlKey,
       'resellLinks': instance.resellLinks,
       'goatProductId': instance.goatProductId,
+      'isFavorite': instance.isFavorite,
     };
 
 LowestResellPrice _$LowestResellPriceFromJson(Map<String, dynamic> json) =>

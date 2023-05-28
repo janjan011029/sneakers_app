@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class RoundedCartButton extends StatelessWidget {
-  final VoidCallback onClick;
-  final bool isLiked;
   const RoundedCartButton({
     super.key,
     required this.onClick,
+    required this.onLike,
     this.isLiked = false,
   });
+
+  final VoidCallback onClick;
+  final VoidCallback onLike;
+  final bool isLiked;
 
   @override
   Widget build(BuildContext context) {
@@ -33,9 +36,9 @@ class RoundedCartButton extends StatelessWidget {
           ),
         ),
         onPressed: onClick,
-        child: Row(
+        child: const Row(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: const [
+          children: [
             Icon(
               Icons.shopping_cart,
               color: Colors.white,
@@ -51,12 +54,15 @@ class RoundedCartButton extends StatelessWidget {
     );
   }
 
-  Padding _renderFavorite() {
-    return Padding(
-      padding: const EdgeInsets.only(right: 10),
-      child: Icon(
-        isLiked ? Icons.favorite : Icons.favorite_border_outlined,
-        color: isLiked ? Colors.pink : Colors.black,
+  InkWell _renderFavorite() {
+    return InkWell(
+      onTap: onLike,
+      child: Padding(
+        padding: const EdgeInsets.only(right: 10),
+        child: Icon(
+          isLiked ? Icons.favorite : Icons.favorite_border_outlined,
+          color: isLiked ? Colors.pink : Colors.black,
+        ),
       ),
     );
   }

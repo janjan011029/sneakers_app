@@ -20,6 +20,7 @@ class ShoeApiResult {
   final String? urlKey;
   final ResellLinks? resellLinks;
   final int? goatProductId;
+  final bool? isFavorite;
 
   ShoeApiResult({
     this.lowestResellPrice,
@@ -38,6 +39,7 @@ class ShoeApiResult {
     this.urlKey,
     this.resellLinks,
     this.goatProductId,
+    this.isFavorite,
   });
 
   factory ShoeApiResult.fromJson(Map<String, dynamic> json) =>

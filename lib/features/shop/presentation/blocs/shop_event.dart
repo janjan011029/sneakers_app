@@ -10,3 +10,5 @@ abstract class ShopEvent extends Equatable {
 class GetShoes extends ShopEvent {}
 
 class GetPopularShoes extends ShopEvent {}
+
+class AddToFavorites extends ShopEvent {}

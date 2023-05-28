@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
 
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
@@ -20,11 +21,15 @@ class _ItemsPageState extends State<ItemsPage> {
   final _dioClient = DioClient();
   @override
   Widget build(BuildContext context) {
-    return BlocProvider<ShopBloc>(
-      create: (context) => ShopBloc(ShopRepository(
-        dioClient: _dioClient,
-      ))
-        ..add(GetShoes()),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<ShopBloc>(
+          create: (context) => ShopBloc(ShopRepository(
+            dioClient: _dioClient,
+          ))
+            ..add(GetShoes()),
+        ),
+      ],
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
@@ -55,7 +60,14 @@ class _ItemsPageState extends State<ItemsPage> {
                       price: state.shoes[index].retailPrice?.toDouble() ?? 0.0,
                       isShop: true,
                       onClick: () {
-                        context.push('/item_details/Nike Air Max Pulse');
+                        context.push(
+                            '/item_details///${state.shoes[index].thumbnail}');
+                      },
+                      addToCart: () {},
+                      addToFav: () {
+                        context
+                            .read<FavoriteCubit>()
+                            .addToFavorite(state.shoes[index]);
                       },
                     );
                   },

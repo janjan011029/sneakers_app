@@ -4,6 +4,7 @@ class ShopState extends Equatable {
   const ShopState({
     this.shoes = const [],
     this.popularShoes = const [],
+    this.favoriteShoes = const [],
     this.getShoesStatus = Status.initial,
     this.getPopularShoesStatus = Status.initial,
     this.errMsg = '',
@@ -11,6 +12,7 @@ class ShopState extends Equatable {
 
   final List<ShoeApiResult> shoes;
   final List<ShoeApiResult> popularShoes;
+  final List<ShoeApiResult> favoriteShoes;
   final Status getShoesStatus;
   final Status getPopularShoesStatus;
   final String errMsg;
@@ -18,6 +20,7 @@ class ShopState extends Equatable {
   ShopState copyWith({
     List<ShoeApiResult>? shoes,
     List<ShoeApiResult>? popularShoes,
+    List<ShoeApiResult>? favoriteShoes,
     Status? getShoesStatus,
     Status? getPopularShoesStatus,
     String? errMsg,
@@ -25,6 +28,7 @@ class ShopState extends Equatable {
     return ShopState(
       shoes: shoes ?? this.shoes,
       popularShoes: popularShoes ?? this.popularShoes,
+      favoriteShoes: favoriteShoes ?? this.favoriteShoes,
       getShoesStatus: getShoesStatus ?? this.getShoesStatus,
       getPopularShoesStatus:
           getPopularShoesStatus ?? this.getPopularShoesStatus,
@@ -36,6 +40,7 @@ class ShopState extends Equatable {
   List<Object?> get props => [
         shoes,
         popularShoes,
+        favoriteShoes,
         getShoesStatus,
         getPopularShoesStatus,
         errMsg,

@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sneakers_app/features/cart/widgets/cart_item.dart';
+import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
 
 class FavoritePage extends StatefulWidget {
-  const FavoritePage({super.key});
+  const FavoritePage({
+    super.key,
+  });
 
   @override
   State<FavoritePage> createState() => _FavoritePageState();
@@ -28,19 +33,33 @@ class _FavoritePageState extends State<FavoritePage> {
             ),
           ],
         ),
-        body: const SingleChildScrollView(
-          child: Column(
-            children: [
-              // CartItem(
-              //   itemName: '',
-              //   price: 99.00,
-              //   img: '',
-              //   isLike: true,
-              //   isShop: true,
-              //   onClick: () {},
-              // ),
-            ],
-          ),
+        body: BlocBuilder<FavoriteCubit, FavoriteState>(
+          builder: (context, state) {
+            return ListView.builder(
+              itemCount: state.favoriteItems.length,
+              itemBuilder: (context, index) {
+                final item = state.favoriteItems[index];
+                final itemName = item.shoeName ?? '-';
+                final price = item.retailPrice?.toDouble() ?? 0.0;
+                final img = item.thumbnail ?? '';
+
+                if (state.favoriteItems.isEmpty) {
+                  return const Center(
+                    child: Text('No items found.'),
+                  );
+                }
+
+                return CartItem(
+                  itemName: itemName,
+                  price: price,
+                  img: img,
+                  onClick: () {},
+                  addToFav: () {},
+                  addToCart: () {},
+                );
+              },
+            );
+          },
         ),
       ),
     );

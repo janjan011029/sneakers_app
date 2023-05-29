@@ -13,7 +13,7 @@ ShoeApiResult _$ShoeApiResultFromJson(Map<String, dynamic> json) =>
           : LowestResellPrice.fromJson(
               json['lowestResellPrice'] as Map<String, dynamic>),
       imageLinks: json['imageLinks'] as List<dynamic>?,
-      id: json['id'] as String?,
+      id: json['_id'] as String?,
       shoeName: json['shoeName'] as String?,
       brand: json['brand'] as String?,
       silhoutte: json['silhoutte'] as String?,
@@ -36,7 +36,7 @@ Map<String, dynamic> _$ShoeApiResultToJson(ShoeApiResult instance) =>
     <String, dynamic>{
       'lowestResellPrice': instance.lowestResellPrice,
       'imageLinks': instance.imageLinks,
-      'id': instance.id,
+      '_id': instance.id,
       'shoeName': instance.shoeName,
       'brand': instance.brand,
       'silhoutte': instance.silhoutte,

@@ -9,7 +9,17 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit() : super(const FavoriteState());
 
   void addToFavorite(ShoeApiResult data) {
-    state;
+    final res = state.favoriteItems.where((e) => e.id == data.id);
+
+    if (res.isNotEmpty) {
+      emit(FavoriteState(
+        favoriteItems: state.favoriteItems,
+        alreadyExist: true,
+      ));
+
+      return;
+    }
+
     emit(FavoriteState(
       favoriteItems: [
         ...state.favoriteItems,
@@ -26,5 +36,12 @@ class FavoriteCubit extends Cubit<FavoriteState> {
     ));
 
     return favorites;
+  }
+
+  void setAlreadyExistToFalse() {
+    emit(FavoriteState(
+      favoriteItems: state.favoriteItems,
+      alreadyExist: false,
+    ));
   }
 }

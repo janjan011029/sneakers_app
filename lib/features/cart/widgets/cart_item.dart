@@ -39,7 +39,6 @@ class _CartItemState extends State<CartItem> {
       padding: const EdgeInsets.all(5.0),
       child: Container(
         width: double.infinity,
-        height: 150,
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: const BorderRadius.all(
@@ -57,7 +56,7 @@ class _CartItemState extends State<CartItem> {
         child: Row(
           children: [
             _renderImage(),
-            _renderDetails(x.nextInt(5)),
+            _renderDetails(3),
           ],
         ),
       ),
@@ -148,7 +147,8 @@ class _CartItemState extends State<CartItem> {
     return InkWell(
       onTap: widget.onClick,
       child: Container(
-        width: 150,
+        padding: const EdgeInsets.all(10),
+        width: 140,
         decoration: const BoxDecoration(
           color: Colors.transparent,
           borderRadius: BorderRadius.all(

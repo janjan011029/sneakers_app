@@ -6,6 +6,7 @@ part 'shoe_api_result.g.dart';
 class ShoeApiResult {
   final LowestResellPrice? lowestResellPrice;
   final List<dynamic>? imageLinks;
+  @JsonKey(name: '_id')
   final String? id;
   final String? shoeName;
   final String? brand;

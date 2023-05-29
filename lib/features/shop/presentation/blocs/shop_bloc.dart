@@ -18,7 +18,6 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
         super(const ShopState()) {
     on<GetShoes>(_getShoes);
     on<GetPopularShoes>(_getPopularShoes);
-    on<AddToFavorites>(_addToFavorites);
   }
 
   FutureOr<void> _getShoes(GetShoes event, Emitter<ShopState> emit) async {
@@ -72,12 +71,5 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
         errMsg: e.toString(),
       ));
     }
-  }
-
-  FutureOr<void> _addToFavorites(
-      AddToFavorites event, Emitter<ShopState> emit) {
-    final all = state.shoes;
-    final result = state.shoes.where((element) => element.id == event.data.id);
-    // state.shoes.firstWhere((element) => false)
   }
 }

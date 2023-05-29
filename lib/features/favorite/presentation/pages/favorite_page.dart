@@ -53,6 +53,8 @@ class _FavoritePageState extends State<FavoritePage> {
                   itemName: itemName,
                   price: price,
                   img: img,
+                  isLike: true,
+                  isShop: true,
                   onClick: () {},
                   addToFav: () {},
                   addToCart: () {},

@@ -1,5 +1,6 @@
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/features/cart/presentation/pages/cart_page.dart';
+import 'package:sneakers_app/models/shoe_api_result.dart';
 
 import '../error_screen.dart';
 import '../features/shop/presentation/pages/item_details.dart';
@@ -27,9 +28,10 @@ class MyRouter {
         },
       ),
       GoRoute(
-        path: '/item_details/:id',
+        path: '/item_details',
+        name: 'Item-Details',
         builder: (context, state) {
-          return ItemDetails(title: state.params['id']!);
+          return ItemDetails(data: state.extra as ShoeApiResult);
         },
       ),
       GoRoute(

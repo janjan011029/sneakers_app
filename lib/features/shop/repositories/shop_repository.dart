@@ -23,6 +23,7 @@ class ShopRepository implements IShopRepository {
 
       for (var x in data) {
         final shoe = ShoeApiResult.fromJson(x);
+        if (shoe.goatProductId == null) continue;
         shoeList.add(shoe);
       }
 

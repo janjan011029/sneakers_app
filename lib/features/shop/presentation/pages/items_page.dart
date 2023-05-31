@@ -83,20 +83,35 @@ class _ItemsPageState extends State<ItemsPage> {
                       itemCount: state.shoes.length,
                       itemBuilder: (context, index) {
                         return CartItem(
+                          isLike: state.shoes[index].isFavorite ?? false,
                           img: state.shoes[index].thumbnail ?? '-',
                           itemName: state.shoes[index].shoeName ?? '-',
                           price:
                               state.shoes[index].retailPrice?.toDouble() ?? 0.0,
                           isShop: true,
                           onClick: () {
-                            context.push(
-                                '/item_details///${state.shoes[index].thumbnail}');
+                            context.pushNamed(
+                              'Item-Details',
+                              extra: state.shoes[index],
+                            );
                           },
                           addToCart: () {},
                           addToFav: () {
                             context
                                 .read<FavoriteCubit>()
                                 .addToFavorite(state.shoes[index]);
+
+                            if (state.shoes[index].isFavorite ?? false) {
+                              context.read<ShopBloc>().add(AddToFavorites(
+                                    isAdd: true,
+                                    id: state.shoes[index].goatProductId ?? 0,
+                                  ));
+                            } else {
+                              context.read<ShopBloc>().add(AddToFavorites(
+                                    isAdd: true,
+                                    id: state.shoes[index].goatProductId ?? 0,
+                                  ));
+                            }
                           },
                         );
                       },

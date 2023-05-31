@@ -1,10 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:sneakers_app/models/shoe_api_result.dart';
 import 'package:sneakers_app/widgets/rounded_button.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
 class ItemDetails extends StatefulWidget {
-  final String title;
-  const ItemDetails({super.key, required this.title});
+  const ItemDetails({
+    super.key,
+    required this.data,
+  });
+
+  final ShoeApiResult data;
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -15,6 +21,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
+    final title = widget.data.silhoutte ?? '-';
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -24,7 +31,7 @@ class _ItemDetailsState extends State<ItemDetails> {
             color: Colors.black,
           ),
           title: Text(
-            widget.title,
+            title,
             style: const TextStyle(color: Colors.black),
           ),
           actions: [
@@ -157,13 +164,20 @@ class _ItemDetailsState extends State<ItemDetails> {
     return Hero(
       tag: 'sample',
       child: Container(
-        height: 250,
         width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.grey[200],
-          image: const DecorationImage(
-            image: AssetImage('assets/air_max.png'),
-            fit: BoxFit.none,
+        decoration: const BoxDecoration(
+          color: Colors.transparent,
+          borderRadius: BorderRadius.all(
+            Radius.circular(20),
+          ),
+        ),
+        child: Center(
+          child: CachedNetworkImage(
+            fit: BoxFit.fill,
+            imageUrl: widget.data.thumbnail ?? '',
+            progressIndicatorBuilder: (context, url, downloadProgress) =>
+                CircularProgressIndicator(value: downloadProgress.progress),
+            errorWidget: (context, url, error) => const Icon(Icons.error),
           ),
         ),
       ),

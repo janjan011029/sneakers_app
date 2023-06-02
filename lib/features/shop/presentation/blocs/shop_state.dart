@@ -8,6 +8,7 @@ class ShopState extends Equatable {
     this.getShoesStatus = Status.initial,
     this.getPopularShoesStatus = Status.initial,
     this.errMsg = '',
+    this.emitted = false,
   });
 
   final List<ShoeApiResult> shoes;
@@ -16,6 +17,7 @@ class ShopState extends Equatable {
   final Status getShoesStatus;
   final Status getPopularShoesStatus;
   final String errMsg;
+  final bool emitted;
 
   ShopState copyWith({
     List<ShoeApiResult>? shoes,
@@ -24,6 +26,7 @@ class ShopState extends Equatable {
     Status? getShoesStatus,
     Status? getPopularShoesStatus,
     String? errMsg,
+    bool? emitted,
   }) {
     return ShopState(
       shoes: shoes ?? this.shoes,
@@ -33,6 +36,7 @@ class ShopState extends Equatable {
       getPopularShoesStatus:
           getPopularShoesStatus ?? this.getPopularShoesStatus,
       errMsg: errMsg ?? this.errMsg,
+      emitted: emitted ?? this.emitted,
     );
   }
 
@@ -44,5 +48,6 @@ class ShopState extends Equatable {
         getShoesStatus,
         getPopularShoesStatus,
         errMsg,
+        emitted,
       ];
 }

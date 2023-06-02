@@ -1,4 +1,3 @@
-import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -48,33 +47,11 @@ class _ItemsPageState extends State<ItemsPage> {
               ),
             ],
           ),
-          body: BlocConsumer<FavoriteCubit, FavoriteState>(
-            listenWhen: (p, c) => p != c,
+          body: BlocConsumer<ShopBloc, ShopState>(
             listener: (context, state) {
-              if (state.alreadyExist) {
-                final snackBar = SnackBar(
-                  /// need to set following properties for best effect of awesome_snackbar_content
-                  elevation: 0,
-                  behavior: SnackBarBehavior.floating,
-                  backgroundColor: Colors.transparent,
-                  content: AwesomeSnackbarContent(
-                    title: 'On Snap!',
-                    message:
-                        'This is an example error message that will be shown in the body of snackbar!',
-
-                    /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
-                    contentType: ContentType.failure,
-                  ),
-                );
-
-                ScaffoldMessenger.of(context)
-                  ..hideCurrentSnackBar()
-                  ..showSnackBar(snackBar);
-
-                context.read<FavoriteCubit>().setAlreadyExistToFalse();
-              }
+              context.read<ShopBloc>().add(SetEmittedToFalse());
             },
-            builder: (context, favState) {
+            builder: (context, state) {
               return BlocBuilder<ShopBloc, ShopState>(
                 builder: (context, state) {
                   final status = state.getShoesStatus;
@@ -82,35 +59,37 @@ class _ItemsPageState extends State<ItemsPage> {
                     return ListView.builder(
                       itemCount: state.shoes.length,
                       itemBuilder: (context, index) {
+                        final shoes = state.shoes[index];
+                        final isFavorite = shoes.isFavorite ?? false;
+                        final image = shoes.thumbnail ?? '';
+                        final shoeName = shoes.shoeName ?? '-';
+                        final price = shoes.retailPrice?.toDouble() ?? 0.0;
+                        final productId = shoes.goatProductId ?? 0;
+
                         return CartItem(
-                          isLike: state.shoes[index].isFavorite ?? false,
-                          img: state.shoes[index].thumbnail ?? '-',
-                          itemName: state.shoes[index].shoeName ?? '-',
-                          price:
-                              state.shoes[index].retailPrice?.toDouble() ?? 0.0,
+                          isLike: isFavorite,
+                          img: image,
+                          itemName: shoeName,
+                          price: price,
                           isShop: true,
                           onClick: () {
                             context.pushNamed(
                               'Item-Details',
-                              extra: state.shoes[index],
+                              extra: shoes,
                             );
                           },
                           addToCart: () {},
                           addToFav: () {
-                            context
-                                .read<FavoriteCubit>()
-                                .addToFavorite(state.shoes[index]);
-
-                            if (state.shoes[index].isFavorite ?? false) {
-                              context.read<ShopBloc>().add(AddToFavorites(
-                                    isAdd: true,
-                                    id: state.shoes[index].goatProductId ?? 0,
-                                  ));
+                            context.read<ShopBloc>().add(AddToFavorites(
+                                  isAdd: !isFavorite,
+                                  id: productId,
+                                ));
+                            if (!isFavorite) {
+                              context
+                                  .read<FavoriteCubit>()
+                                  .addToFavorite(shoes);
                             } else {
-                              context.read<ShopBloc>().add(AddToFavorites(
-                                    isAdd: true,
-                                    id: state.shoes[index].goatProductId ?? 0,
-                                  ));
+                              context.read<FavoriteCubit>().removeItem(shoes);
                             }
                           },
                         );

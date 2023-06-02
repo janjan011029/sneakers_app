@@ -62,7 +62,8 @@ class _FavoritePageState extends State<FavoritePage> {
                   isLike: true,
                   isShop: true,
                   onClick: () {},
-                  addToFav: () {},
+                  addToFav: () =>
+                      context.read<FavoriteCubit>().removeItem(item),
                   addToCart: () {},
                 );
               },

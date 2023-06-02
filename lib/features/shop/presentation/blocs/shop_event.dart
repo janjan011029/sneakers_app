@@ -20,3 +20,5 @@ class AddToFavorites extends ShopEvent {
   final bool isAdd;
   final int id;
 }
+
+class SetEmittedToFalse extends ShopEvent {}

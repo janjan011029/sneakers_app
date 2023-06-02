@@ -11,21 +11,31 @@ part 'favorite_state.dart';
 class FavoriteCubit extends Cubit<FavoriteState> {
   FavoriteCubit() : super(const FavoriteState());
 
-  void addToFavorite(ShoeApiResult data) async {
+  void saveTolocal(List<String> favorites, List<ShoeApiResult> items) async {
     final pref = await SharedPreferences.getInstance();
-    final List<String> favorites = [];
 
-    final res =
-        state.favoriteItems.where((e) => e.goatProductId == data.goatProductId);
-
-    if (res.isNotEmpty) {
-      emit(FavoriteState(
-        favoriteItems: state.favoriteItems,
-        alreadyExist: true,
-      ));
-
-      return;
+    for (var x in items) {
+      favorites.add(x.goatProductId.toString());
     }
+
+    await pref.setStringList('favorites', favorites);
+    await pref.setString('items', jsonEncode(items));
+  }
+
+  void removeItem(ShoeApiResult data) {
+    List<ShoeApiResult> list = List.from(state.favoriteItems);
+
+    list.removeWhere((e) => e.goatProductId == data.goatProductId);
+
+    emit(FavoriteState(
+      favoriteItems: list,
+    ));
+
+    saveTolocal([], state.favoriteItems);
+  }
+
+  void addToFavorite(ShoeApiResult data) async {
+    final List<String> favorites = [];
 
     emit(FavoriteState(
       favoriteItems: [
@@ -34,22 +44,7 @@ class FavoriteCubit extends Cubit<FavoriteState> {
       ],
     ));
 
-    for (var x in state.favoriteItems) {
-      favorites.add(x.goatProductId.toString());
-    }
-
-    await pref.setStringList('favorites', favorites);
-    await pref.setString('items', jsonEncode(state.favoriteItems));
-  }
-
-  bool removeFromFavorite(ShoeApiResult data) {
-    final favorites = state.favoriteItems.remove(data);
-
-    emit(FavoriteState(
-      favoriteItems: state.favoriteItems,
-    ));
-
-    return favorites;
+    saveTolocal(favorites, state.favoriteItems);
   }
 
   void setAlreadyExistToFalse() {

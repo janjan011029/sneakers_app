@@ -20,6 +20,7 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
     on<GetShoes>(_getShoes);
     on<GetPopularShoes>(_getPopularShoes);
     on<AddToFavorites>(_addToFavorites);
+    on<SetEmittedToFalse>(_setEmittedToFalse);
   }
 
   FutureOr<void> _getShoes(GetShoes event, Emitter<ShopState> emit) async {
@@ -113,29 +114,31 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
       AddToFavorites event, Emitter<ShopState> emit) {
     try {
       final index = state.shoes.indexWhere((e) => e.goatProductId == event.id);
+      final shoes = state.shoes[index];
 
       state.shoes[index] = ShoeApiResult(
-        brand: state.shoes[index].brand,
-        colorway: state.shoes[index].colorway,
-        description: state.shoes[index].description,
-        goatProductId: state.shoes[index].goatProductId,
-        id: state.shoes[index].id,
-        imageLinks: state.shoes[index].imageLinks,
+        brand: shoes.brand,
+        colorway: shoes.colorway,
+        description: shoes.description,
+        goatProductId: shoes.goatProductId,
+        id: shoes.id,
+        imageLinks: shoes.imageLinks,
         lowestResellPrice: state.shoes[index].lowestResellPrice,
-        make: state.shoes[index].make,
-        releaseDate: state.shoes[index].releaseDate,
-        resellLinks: state.shoes[index].resellLinks,
-        retailPrice: state.shoes[index].retailPrice,
-        shoeName: state.shoes[index].shoeName,
-        silhoutte: state.shoes[index].silhoutte,
-        styleId: state.shoes[index].styleId,
-        thumbnail: state.shoes[index].thumbnail,
-        urlKey: state.shoes[index].urlKey,
+        make: shoes.make,
+        releaseDate: shoes.releaseDate,
+        resellLinks: shoes.resellLinks,
+        retailPrice: shoes.retailPrice,
+        shoeName: shoes.shoeName,
+        silhoutte: shoes.silhoutte,
+        styleId: shoes.styleId,
+        thumbnail: shoes.thumbnail,
+        urlKey: shoes.urlKey,
         isFavorite: event.isAdd,
       );
 
       emit(state.copyWith(
         shoes: state.shoes,
+        emitted: true,
       ));
     } catch (e) {
       emit(state.copyWith(
@@ -143,5 +146,10 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
         errMsg: e.toString(),
       ));
     }
+  }
+
+  FutureOr<void> _setEmittedToFalse(
+      SetEmittedToFalse event, Emitter<ShopState> emit) {
+    emit(state.copyWith(emitted: false));
   }
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
+import 'package:badges/badges.dart' as badges;
 
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
@@ -33,12 +35,20 @@ class _HomePageState extends State<HomePage> {
           appBar: AppBar(
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 15, top: 15),
                 child: GestureDetector(
-                    onTap: () {
-                      context.push('/cart');
-                    },
-                    child: const Icon(Icons.shopping_cart_outlined)),
+                  onTap: () {
+                    context.push('/cart');
+                  },
+                  child: const badges.Badge(
+                      badgeContent: Text(
+                        '3',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      child: Icon(Icons.shopping_cart_outlined)),
+                ),
               ),
             ],
             centerTitle: true,
@@ -117,8 +127,114 @@ class NavigationDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Drawer(
+    return Drawer(
       backgroundColor: Colors.white,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          _renderHeader(),
+          const SizedBox(height: 15),
+          const DrawerIconText(
+            icon: TablerIcons.home,
+            title: 'Home',
+          ),
+          const DrawerIconText(
+            icon: TablerIcons.settings,
+            title: 'Settings',
+          ),
+          const DrawerIconText(
+            icon: TablerIcons.shopping_cart,
+            title: 'Cart',
+          ),
+          const DrawerIconText(
+            icon: TablerIcons.user,
+            title: 'Account',
+          ),
+          const DrawerIconText(
+            icon: TablerIcons.bell,
+            title: 'Notifications',
+          ),
+        ],
+      ),
+    );
+  }
+
+  Container _renderHeader() {
+    return Container(
+      color: Colors.black87,
+      height: 200,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Container(
+              height: 100,
+              decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.white,
+                  image: DecorationImage(image: AssetImage('assets/me.jpg'))),
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Text(
+            'Jaime Jr. Aballe',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 24,
+            ),
+          ),
+          const Text(
+            'jaimeaballe@gmail.com',
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: 16,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class DrawerIconText extends StatelessWidget {
+  const DrawerIconText({
+    super.key,
+    required this.icon,
+    required this.title,
+  });
+
+  final IconData icon;
+  final String title;
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: GestureDetector(
+        onTap: () {},
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Expanded(
+              child: Icon(
+                icon,
+                size: 28,
+              ),
+            ),
+            const SizedBox(width: 10),
+            Expanded(
+              flex: 3,
+              child: Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }

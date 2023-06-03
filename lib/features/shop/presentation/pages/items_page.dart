@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
+import 'package:badges/badges.dart' as badges;
 
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
@@ -19,6 +20,11 @@ class ItemsPage extends StatefulWidget {
 
 class _ItemsPageState extends State<ItemsPage> {
   final _dioClient = DioClient();
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
@@ -38,12 +44,20 @@ class _ItemsPageState extends State<ItemsPage> {
             elevation: 0,
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 10),
+                padding: const EdgeInsets.only(right: 15, top: 15),
                 child: GestureDetector(
-                    onTap: () {
-                      context.push('/cart');
-                    },
-                    child: const Icon(Icons.shopping_cart_outlined)),
+                  onTap: () {
+                    context.push('/cart');
+                  },
+                  child: const badges.Badge(
+                      badgeContent: Text(
+                        '3',
+                        style: TextStyle(
+                          color: Colors.white,
+                        ),
+                      ),
+                      child: Icon(Icons.shopping_cart_outlined)),
+                ),
               ),
             ],
           ),

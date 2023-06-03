@@ -1,8 +1,10 @@
+import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:sneakers_app/features/cart/widgets/cart_item.dart';
-import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
+
+import '../../../cart/widgets/cart_item.dart';
+import '../cubits/favorite_cubit.dart';
 
 class FavoritePage extends StatefulWidget {
   const FavoritePage({
@@ -30,12 +32,20 @@ class _FavoritePageState extends State<FavoritePage> {
           elevation: 0,
           actions: [
             Padding(
-              padding: const EdgeInsets.only(right: 10),
+              padding: const EdgeInsets.only(right: 15, top: 15),
               child: GestureDetector(
-                  onTap: () {
-                    context.push('/cart');
-                  },
-                  child: const Icon(Icons.shopping_cart_outlined)),
+                onTap: () {
+                  context.push('/cart');
+                },
+                child: const badges.Badge(
+                    badgeContent: Text(
+                      '3',
+                      style: TextStyle(
+                        color: Colors.white,
+                      ),
+                    ),
+                    child: Icon(Icons.shopping_cart_outlined)),
+              ),
             ),
           ],
         ),

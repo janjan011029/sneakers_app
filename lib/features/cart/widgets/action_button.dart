@@ -1,13 +1,16 @@
 import 'package:flutter/material.dart';
 
 class ActionButton extends StatelessWidget {
-  final Icon icon;
-  final Color? color;
   const ActionButton({
     super.key,
     required this.icon,
+    required this.onTap,
     this.color,
   });
+
+  final Icon icon;
+  final VoidCallback onTap;
+  final Color? color;
 
   @override
   Widget build(BuildContext context) {

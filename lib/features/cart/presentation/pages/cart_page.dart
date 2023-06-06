@@ -1,9 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
+import 'package:sneakers_app/features/cart/presentation/widgets/item_cart_card.dart';
 
 import '../../../../widgets/rounded_button.dart';
 
 class CartPage extends StatefulWidget {
-  const CartPage({super.key});
+  const CartPage({
+    super.key,
+    required this.cartCubit,
+  });
+
+  final CartCubit cartCubit;
 
   @override
   State<CartPage> createState() => _CartPageState();
@@ -12,6 +20,7 @@ class CartPage extends StatefulWidget {
 class _CartPageState extends State<CartPage> {
   @override
   Widget build(BuildContext context) {
+    final cartCubit = widget.cartCubit;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -19,20 +28,57 @@ class _CartPageState extends State<CartPage> {
           title: const Text('Cart'),
           elevation: 0,
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            // CartItem(
-            //   onClick: () {},
-            // ),
-            _renderTotal(context),
-          ],
+        body: BlocProvider.value(
+          value: cartCubit,
+          child: BlocConsumer<CartCubit, CartState>(
+            listener: (context, state) {},
+            builder: (context, state) {
+              return BlocBuilder<CartCubit, CartState>(
+                builder: (context, cartState) {
+                  final items = cartState.cartItems;
+                  return Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: items.length,
+                        itemBuilder: (context, index) {
+                          final item = items[index];
+                          final shoeName = item.shoeName ?? '-';
+                          final price = item.retailPrice?.toDouble() ?? 0.00;
+                          final img = item.thumbnail ?? '';
+                          final qty = item.qty ?? 0;
+
+                          if (items.isEmpty) {
+                            return const Center(
+                              child: Text('No items found.'),
+                            );
+                          }
+
+                          return ItemCartCard(
+                            itemName: shoeName,
+                            price: price,
+                            img: img,
+                            qty: qty,
+                            addQty: () {},
+                            lessQty: () {},
+                          );
+                        },
+                      ),
+                      _renderTotal(context),
+                    ],
+                  );
+                },
+              );
+            },
+          ),
         ),
       ),
     );
   }
 
   Padding _renderTotal(BuildContext context) {
+    final total = context.read<CartCubit>().state.totalAmount.toString();
     return Padding(
       padding: const EdgeInsets.only(left: 15, top: 15, bottom: 15),
       child: Row(
@@ -42,7 +88,7 @@ class _CartPageState extends State<CartPage> {
             children: [
               Text('Total', style: Theme.of(context).textTheme.bodyMedium),
               Text(
-                '\$999',
+                '\$$total',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: 20,
                       fontWeight: FontWeight.bold,

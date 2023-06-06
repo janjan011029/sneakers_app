@@ -22,6 +22,8 @@ class _ItemDetailsState extends State<ItemDetails> {
   @override
   Widget build(BuildContext context) {
     final title = widget.data.silhoutte ?? '-';
+    final isFavorite = widget.data.isFavorite ?? false;
+    final releaseDate = widget.data.releaseDate ?? '';
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -39,9 +41,9 @@ class _ItemDetailsState extends State<ItemDetails> {
               padding: const EdgeInsets.only(right: 10),
               child: GestureDetector(
                 onTap: () {},
-                child: const Icon(
-                  Icons.favorite_outline,
-                  color: Colors.black,
+                child: Icon(
+                  isFavorite ? Icons.favorite : Icons.favorite_outline,
+                  color: isFavorite ? Colors.pink : Colors.black,
                 ),
               ),
             )
@@ -61,7 +63,7 @@ class _ItemDetailsState extends State<ItemDetails> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      _renderRating(context),
+                      _renderRating(context, releaseDate),
                       const SizedBox(height: 5),
                       _renderDescription(context),
                       const SizedBox(height: 10),
@@ -80,24 +82,49 @@ class _ItemDetailsState extends State<ItemDetails> {
     );
   }
 
-  Column _renderRating(BuildContext context) {
-    return Column(
+  Row _renderRating(BuildContext context, String releaseDate) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Rating',
-          style: Theme.of(context).textTheme.labelLarge?.copyWith(
-                fontWeight: FontWeight.bold,
-              ),
-        ),
-        const SizedBox(height: 5),
-        Row(
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            for (var x = 0; x <= 3; x++)
-              const Icon(
-                Icons.star,
-                color: Colors.yellow,
-              ),
+            Text(
+              'Rating',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                for (var x = 0; x <= 3; x++)
+                  const Icon(
+                    Icons.star,
+                    color: Colors.yellow,
+                  ),
+              ],
+            ),
+          ],
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Release Date',
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                  ),
+            ),
+            const SizedBox(height: 5),
+            Text(
+              releaseDate,
+              style: Theme.of(context).textTheme.labelLarge?.copyWith(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
+            ),
           ],
         ),
       ],
@@ -114,7 +141,7 @@ class _ItemDetailsState extends State<ItemDetails> {
             children: [
               Text('Price', style: Theme.of(context).textTheme.bodyMedium),
               Text(
-                '\$99',
+                '\$${widget.data.retailPrice}',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -152,7 +179,7 @@ class _ItemDetailsState extends State<ItemDetails> {
       content: AwesomeSnackbarContent(
         color: Colors.green,
         title: 'Successfully Added!',
-        message: 'Nike Air Max Pulse is now added to cart',
+        message: '${widget.data.shoeName} is now added to cart',
 
         /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
         contentType: ContentType.success,
@@ -162,7 +189,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   Hero _renderImage() {
     return Hero(
-      tag: 'sample',
+      tag: widget.data.thumbnail ?? '',
       child: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -316,8 +343,8 @@ class _ItemDetailsState extends State<ItemDetails> {
         ),
         const SizedBox(height: 5),
         Text(
-          "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
-          style: Theme.of(context).textTheme.bodySmall,
+          widget.data.description ?? '',
+          style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],
     );

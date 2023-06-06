@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:sneakers_app/features/cart/presentation/pages/cart_page.dart';
 import 'package:sneakers_app/models/shoe_api_result.dart';
 
@@ -37,7 +38,9 @@ class MyRouter {
       GoRoute(
         path: '/cart',
         builder: (context, state) {
-          return const CartPage();
+          return CartPage(
+            cartCubit: state.extra as CartCubit,
+          );
         },
       ),
     ],

@@ -37,6 +37,26 @@ class FavoriteCubit extends Cubit<FavoriteState> {
   void addToFavorite(ShoeApiResult data) async {
     final List<String> favorites = [];
 
+    data = ShoeApiResult(
+      brand: data.brand,
+      colorway: data.colorway,
+      description: data.description,
+      goatProductId: data.goatProductId,
+      id: data.id,
+      imageLinks: data.imageLinks,
+      lowestResellPrice: data.lowestResellPrice,
+      make: data.make,
+      releaseDate: data.releaseDate,
+      resellLinks: data.resellLinks,
+      retailPrice: data.retailPrice,
+      shoeName: data.shoeName,
+      silhoutte: data.silhoutte,
+      styleId: data.styleId,
+      thumbnail: data.thumbnail,
+      urlKey: data.urlKey,
+      isFavorite: true,
+    );
+
     emit(FavoriteState(
       favoriteItems: [
         ...state.favoriteItems,

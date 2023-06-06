@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:go_router/go_router.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
 
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
@@ -23,6 +24,10 @@ class _HomePageState extends State<HomePage> {
   final _dioClient = DioClient();
   @override
   Widget build(BuildContext context) {
+    bool isShow =
+        context.watch<CartCubit>().state.cartItems.isEmpty ? false : true;
+    String bagdeCount =
+        context.watch<CartCubit>().state.cartItems.length.toString();
     return BlocProvider(
       create: (context) => ShopBloc(ShopRepository(
         dioClient: _dioClient,
@@ -40,14 +45,15 @@ class _HomePageState extends State<HomePage> {
                   onTap: () {
                     context.push('/cart');
                   },
-                  child: const badges.Badge(
+                  child: badges.Badge(
+                      showBadge: isShow,
                       badgeContent: Text(
-                        '3',
-                        style: TextStyle(
+                        bagdeCount,
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      child: Icon(Icons.shopping_cart_outlined)),
+                      child: const Icon(Icons.shopping_cart_outlined)),
                 ),
               ),
             ],

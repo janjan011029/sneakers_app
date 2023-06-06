@@ -2,15 +2,15 @@ import 'dart:math';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:sneakers_app/features/cart/widgets/action_button.dart';
-import 'package:sneakers_app/features/cart/widgets/rounded_cart_button.dart';
+import '../../../cart/widgets/action_button.dart';
+import '../../../cart/widgets/rounded_cart_button.dart';
 
-class CartItem extends StatefulWidget {
-  const CartItem({
+class ItemCard extends StatefulWidget {
+  const ItemCard({
     super.key,
-    this.isShop = false,
     this.isLike = false,
     required this.itemName,
+    this.qty = 0,
     required this.price,
     required this.img,
     required this.onClick,
@@ -18,9 +18,9 @@ class CartItem extends StatefulWidget {
     required this.addToCart,
   });
 
-  final bool isShop;
   final bool isLike;
   final String itemName;
+  final int qty;
   final double price;
   final String img;
   final VoidCallback onClick;
@@ -28,10 +28,10 @@ class CartItem extends StatefulWidget {
   final VoidCallback addToCart;
 
   @override
-  State<CartItem> createState() => _CartItemState();
+  State<ItemCard> createState() => _ItemCardState();
 }
 
-class _CartItemState extends State<CartItem> {
+class _ItemCardState extends State<ItemCard> {
   final x = Random();
   @override
   Widget build(BuildContext context) {
@@ -103,38 +103,38 @@ class _CartItemState extends State<CartItem> {
                 ],
               ),
             ),
-            widget.isShop
-                ? RoundedCartButton(
-                    isLiked: widget.isLike,
-                    onClick: widget.addToCart,
-                    onLike: widget.addToFav,
-                  )
-                : _renderAction(),
+            RoundedCartButton(
+              isLiked: widget.isLike,
+              onClick: widget.addToCart,
+              onLike: widget.addToFav,
+            ),
           ],
         ),
       ),
     );
   }
 
-  Row _renderAction() {
-    return const Row(
+  Row _renderAction(VoidCallback addQty, VoidCallback lessQty, int qty) {
+    return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       children: [
         ActionButton(
-          icon: Icon(
+          onTap: addQty,
+          icon: const Icon(
             Icons.remove,
             color: Colors.white,
           ),
         ),
         Text(
-          '1',
-          style: TextStyle(
+          '$qty',
+          style: const TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.bold,
           ),
         ),
         ActionButton(
-          icon: Icon(
+          onTap: lessQty,
+          icon: const Icon(
             Icons.add,
             color: Colors.white,
           ),
@@ -146,22 +146,25 @@ class _CartItemState extends State<CartItem> {
   InkWell _renderImage() {
     return InkWell(
       onTap: widget.onClick,
-      child: Container(
-        padding: const EdgeInsets.all(10),
-        width: 140,
-        decoration: const BoxDecoration(
-          color: Colors.transparent,
-          borderRadius: BorderRadius.all(
-            Radius.circular(20),
+      child: Hero(
+        tag: widget.img,
+        child: Container(
+          padding: const EdgeInsets.all(10),
+          width: 140,
+          decoration: const BoxDecoration(
+            color: Colors.transparent,
+            borderRadius: BorderRadius.all(
+              Radius.circular(20),
+            ),
           ),
-        ),
-        child: Center(
-          child: CachedNetworkImage(
-            fit: BoxFit.fill,
-            imageUrl: widget.img,
-            progressIndicatorBuilder: (context, url, downloadProgress) =>
-                CircularProgressIndicator(value: downloadProgress.progress),
-            errorWidget: (context, url, error) => const Icon(Icons.error),
+          child: Center(
+            child: CachedNetworkImage(
+              fit: BoxFit.fill,
+              imageUrl: widget.img,
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  CircularProgressIndicator(value: downloadProgress.progress),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+            ),
           ),
         ),
       ),

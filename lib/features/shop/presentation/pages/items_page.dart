@@ -1,3 +1,4 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
@@ -7,7 +8,8 @@ import 'package:badges/badges.dart' as badges;
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
 import '../../../../widgets/app_loading_shimmer.dart';
-import '../../../cart/widgets/cart_item.dart';
+import '../../../cart/presentation/cubits/cart_cubit.dart';
+import '../widgets/item_card.dart';
 import '../../repositories/shop_repository.dart';
 import '../blocs/shop_bloc.dart';
 
@@ -27,6 +29,10 @@ class _ItemsPageState extends State<ItemsPage> {
 
   @override
   Widget build(BuildContext context) {
+    bool isShow =
+        context.watch<CartCubit>().state.cartItems.isEmpty ? false : true;
+    String bagdeCount =
+        context.watch<CartCubit>().state.cartItems.length.toString();
     return MultiBlocProvider(
       providers: [
         BlocProvider<ShopBloc>(
@@ -47,16 +53,17 @@ class _ItemsPageState extends State<ItemsPage> {
                 padding: const EdgeInsets.only(right: 15, top: 15),
                 child: GestureDetector(
                   onTap: () {
-                    context.push('/cart');
+                    context.push('/cart', extra: context.read<CartCubit>());
                   },
-                  child: const badges.Badge(
+                  child: badges.Badge(
+                      showBadge: isShow,
                       badgeContent: Text(
-                        '3',
-                        style: TextStyle(
+                        bagdeCount,
+                        style: const TextStyle(
                           color: Colors.white,
                         ),
                       ),
-                      child: Icon(Icons.shopping_cart_outlined)),
+                      child: const Icon(Icons.shopping_cart_outlined)),
                 ),
               ),
             ],
@@ -80,19 +87,24 @@ class _ItemsPageState extends State<ItemsPage> {
                         final price = shoes.retailPrice?.toDouble() ?? 0.0;
                         final productId = shoes.goatProductId ?? 0;
 
-                        return CartItem(
+                        return ItemCard(
                           isLike: isFavorite,
                           img: image,
                           itemName: shoeName,
                           price: price,
-                          isShop: true,
                           onClick: () {
                             context.pushNamed(
                               'Item-Details',
                               extra: shoes,
                             );
                           },
-                          addToCart: () {},
+                          addToCart: () {
+                            context.read<CartCubit>().addToCart(shoes);
+
+                            ScaffoldMessenger.of(context)
+                              ..hideCurrentSnackBar()
+                              ..showSnackBar(_snackbar(shoeName));
+                          },
                           addToFav: () {
                             context.read<ShopBloc>().add(AddToFavorites(
                                   isAdd: !isFavorite,
@@ -122,6 +134,24 @@ class _ItemsPageState extends State<ItemsPage> {
             },
           ),
         ),
+      ),
+    );
+  }
+
+  SnackBar _snackbar(String shoeName) {
+    return SnackBar(
+      /// need to set following properties for best effect of awesome_snackbar_content
+      elevation: 0,
+      showCloseIcon: false,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        color: Colors.green,
+        title: 'Successfully Added!',
+        message: '$shoeName is now added to cart',
+
+        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+        contentType: ContentType.success,
       ),
     );
   }

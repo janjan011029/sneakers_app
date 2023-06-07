@@ -8,9 +8,6 @@ class CartCubit extends Cubit<CartState> {
   CartCubit() : super(const CartState());
 
   void addToCart(ShoeApiResult data) {
-    final index = state.cartItems
-        .indexWhere((e) => e.goatProductId == data.goatProductId);
-
     data = ShoeApiResult(
       brand: data.brand,
       colorway: data.colorway,
@@ -29,20 +26,78 @@ class CartCubit extends Cubit<CartState> {
       styleId: data.styleId,
       thumbnail: data.thumbnail,
       urlKey: data.urlKey,
-      qty: index.isNegative ? 1 : (data.qty! + 1),
+      qty: 1,
     );
 
-    if (!index.isNegative) {
-      List<ShoeApiResult> list = List.from(state.cartItems);
+    emit(CartState(
+      cartItems: [...state.cartItems, data],
+      totalAmount: computeTotal(),
+    ));
+  }
 
-      list.removeWhere((e) => e.goatProductId == data.goatProductId);
-    }
+  void addQty(ShoeApiResult data) {
+    final index = state.cartItems
+        .indexWhere((e) => e.goatProductId == data.goatProductId);
+
+    if (index.isNegative) return;
+
+    state.cartItems[index] = ShoeApiResult(
+      brand: data.brand,
+      colorway: data.colorway,
+      description: data.description,
+      goatProductId: data.goatProductId,
+      id: data.id,
+      imageLinks: data.imageLinks,
+      isFavorite: data.isFavorite,
+      lowestResellPrice: data.lowestResellPrice,
+      make: data.make,
+      releaseDate: data.releaseDate,
+      resellLinks: data.resellLinks,
+      retailPrice: data.retailPrice,
+      shoeName: data.shoeName,
+      silhoutte: data.silhoutte,
+      styleId: data.styleId,
+      thumbnail: data.thumbnail,
+      urlKey: data.urlKey,
+      qty: (data.qty ?? 0) + 1,
+    );
 
     emit(CartState(
-      cartItems: [
-        ...state.cartItems,
-        data,
-      ],
+      cartItems: state.cartItems,
+      totalAmount: computeTotal(),
+    ));
+  }
+
+  void lessQty(ShoeApiResult data) {
+    final index = state.cartItems
+        .indexWhere((e) => e.goatProductId == data.goatProductId);
+
+    if (index.isNegative) return;
+    if (data.qty == 1) return;
+
+    state.cartItems[index] = ShoeApiResult(
+      brand: data.brand,
+      colorway: data.colorway,
+      description: data.description,
+      goatProductId: data.goatProductId,
+      id: data.id,
+      imageLinks: data.imageLinks,
+      isFavorite: data.isFavorite,
+      lowestResellPrice: data.lowestResellPrice,
+      make: data.make,
+      releaseDate: data.releaseDate,
+      resellLinks: data.resellLinks,
+      retailPrice: data.retailPrice,
+      shoeName: data.shoeName,
+      silhoutte: data.silhoutte,
+      styleId: data.styleId,
+      thumbnail: data.thumbnail,
+      urlKey: data.urlKey,
+      qty: (data.qty ?? 0) - 1,
+    );
+
+    emit(CartState(
+      cartItems: state.cartItems,
       totalAmount: computeTotal(),
     ));
   }

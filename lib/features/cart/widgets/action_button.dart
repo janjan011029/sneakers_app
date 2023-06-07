@@ -15,7 +15,7 @@ class ActionButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return RawMaterialButton(
-      onPressed: () {},
+      onPressed: onTap,
       elevation: 2.0,
       fillColor: color ?? Colors.black,
       padding: const EdgeInsets.all(15.0),

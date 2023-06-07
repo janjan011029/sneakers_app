@@ -39,31 +39,40 @@ class _CartPageState extends State<CartPage> {
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      ListView.builder(
-                        shrinkWrap: true,
-                        itemCount: items.length,
-                        itemBuilder: (context, index) {
-                          final item = items[index];
-                          final shoeName = item.shoeName ?? '-';
-                          final price = item.retailPrice?.toDouble() ?? 0.00;
-                          final img = item.thumbnail ?? '';
-                          final qty = item.qty ?? 0;
+                      Expanded(
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                          itemCount: items.length,
+                          itemBuilder: (context, index) {
+                            final item = items[index];
+                            final shoeName = item.shoeName ?? '-';
+                            final price = item.retailPrice?.toDouble() ?? 0.00;
+                            final img = item.thumbnail ?? '';
+                            final qty = item.qty ?? 0;
 
-                          if (items.isEmpty) {
-                            return const Center(
-                              child: Text('No items found.'),
+                            if (items.isEmpty) {
+                              return const Center(
+                                child: Text('No items found.'),
+                              );
+                            }
+
+                            return ItemCartCard(
+                              itemName: shoeName,
+                              price: price,
+                              img: img,
+                              qty: qty,
+                              addQty: () {
+                                context.read<CartCubit>().addQty(item);
+                              },
+                              lessQty: () {
+                                context.read<CartCubit>().lessQty(item);
+                              },
+                              onDelete: (context) {
+                                context.read<CartCubit>().removeItem(item);
+                              },
                             );
-                          }
-
-                          return ItemCartCard(
-                            itemName: shoeName,
-                            price: price,
-                            img: img,
-                            qty: qty,
-                            addQty: () {},
-                            lessQty: () {},
-                          );
-                        },
+                          },
+                        ),
                       ),
                       _renderTotal(context),
                     ],

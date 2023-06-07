@@ -61,6 +61,11 @@ dev_dependencies:
     sdk: flutter
   hive_generator: ^2.0.0
   json_serializable: ^6.6.1
+  flutter_native_splash: ^2.3.1
+
+flutter_native_splash:
+  color: "#ffffff"
+  image: assets/sneakers_icon.png
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -82,6 +87,8 @@ flutter:
     - assets/running.png
     - assets/basketball.png
     - assets/me.jpg
+    - assets/sneakers_app.png
+    - assets/sneakers_icon.png
   #   - images/a_dot_ham.jpeg
 
   # An image asset can refer to one or more resolution-specific "variants", see

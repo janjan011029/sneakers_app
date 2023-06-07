@@ -23,10 +23,11 @@ class _LoginState extends State<Login> {
           children: [
             Container(
               height: 180,
+              width: 350,
               decoration: const BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage('assets/nike.png'),
-                fit: BoxFit.fitHeight,
+                image: AssetImage('assets/sneakers_app.png'),
+                fit: BoxFit.fitWidth,
               )),
             ),
             Padding(

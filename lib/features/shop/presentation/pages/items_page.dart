@@ -84,7 +84,7 @@ class _ItemsPageState extends State<ItemsPage> {
                         final isFavorite = shoes.isFavorite ?? false;
                         final image = shoes.thumbnail ?? '';
                         final shoeName = shoes.shoeName ?? '-';
-                        final price = shoes.retailPrice?.toDouble() ?? 0.0;
+                        final price = shoes.retailPrice ?? 0;
                         final productId = shoes.goatProductId ?? 0;
 
                         return ItemCard(

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
 import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
+import 'package:sneakers_app/features/cart/repositories/stripe_repository.dart';
 import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
 
 import '../../../shop/presentation/pages/items_page.dart';
@@ -20,7 +21,7 @@ class Dashboard extends StatefulWidget {
 class _DashboardState extends State<Dashboard> {
   final _pageController = PageController();
   final favoriteCubit = FavoriteCubit();
-  final cartCubit = CartCubit();
+  final cartCubit = CartCubit(StripeRepository());
 
   final List<Widget> _screen = [
     const HomePage(),

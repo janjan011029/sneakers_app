@@ -1,8 +1,11 @@
+import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_stripe/flutter_stripe.dart';
 import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:sneakers_app/features/cart/presentation/widgets/item_cart_card.dart';
 
+import '../../../../utils/constant/app_enums.dart';
 import '../../../../widgets/rounded_button.dart';
 
 class CartPage extends StatefulWidget {
@@ -31,7 +34,11 @@ class _CartPageState extends State<CartPage> {
         body: BlocProvider.value(
           value: cartCubit,
           child: BlocConsumer<CartCubit, CartState>(
-            listener: (context, state) {},
+            listener: (context, state) async {
+              if (state.stripePaymentStatus == Status.success) {
+                await _displayPaymentSheet();
+              }
+            },
             builder: (context, state) {
               return BlocBuilder<CartCubit, CartState>(
                 builder: (context, cartState) {
@@ -110,13 +117,80 @@ class _CartPageState extends State<CartPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 15),
               child: RoundedButton(
-                onPressed: () {},
+                onPressed: () {
+                  context.read<CartCubit>().makePayment(
+                        amount: total,
+                        currency: 'USD',
+                      );
+                },
                 title: "Check-out",
                 color: Colors.black,
               ),
             ),
           ),
         ],
+      ),
+    );
+  }
+
+  _displayPaymentSheet() async {
+    try {
+      await Stripe.instance.presentPaymentSheet().then((value) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(_snackbarSuccess());
+
+        Navigator.pop(context);
+      }).onError((error, stackTrace) {
+        print('Error is:--->$error $stackTrace');
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(_snackbarError());
+      });
+    } on StripeException catch (e) {
+      print('Error is:---> $e');
+      showDialog(
+          context: context,
+          builder: (_) => const AlertDialog(
+                content: Text("Cancelled "),
+              ));
+    } catch (e) {
+      print('$e');
+    }
+  }
+
+  SnackBar _snackbarSuccess() {
+    return SnackBar(
+      /// need to set following properties for best effect of awesome_snackbar_content
+      elevation: 0,
+      showCloseIcon: false,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        color: Colors.green,
+        title: 'Success Payment!',
+        message: 'Thank you, Come again.',
+
+        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+        contentType: ContentType.success,
+      ),
+    );
+  }
+
+  SnackBar _snackbarError() {
+    return SnackBar(
+      /// need to set following properties for best effect of awesome_snackbar_content
+      elevation: 0,
+      showCloseIcon: false,
+      behavior: SnackBarBehavior.floating,
+      backgroundColor: Colors.transparent,
+      content: AwesomeSnackbarContent(
+        color: Colors.red,
+        title: 'Error!',
+        message: 'Error in payment please try again.',
+
+        /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
+        contentType: ContentType.success,
       ),
     );
   }

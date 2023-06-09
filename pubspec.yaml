@@ -52,6 +52,8 @@ dependencies:
   cached_network_image: ^3.2.3
   shared_preferences: ^2.1.1
   badges: ^3.1.1
+  flutter_stripe: ^9.2.1
+  http: ^0.13.6
   
 
 dev_dependencies:

@@ -1,11 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:sneakers_app/features/cart/repositories/istripe_repository.dart';
 import 'package:sneakers_app/models/shoe_api_result.dart';
+
+import '../../../../utils/constant/app_enums.dart';
 
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
-  CartCubit() : super(const CartState());
+  final IStripeRepository _stripeRepository;
+  CartCubit(IStripeRepository iStripeRepository)
+      : _stripeRepository = iStripeRepository,
+        super(const CartState());
 
   void addToCart(ShoeApiResult data) {
     data = ShoeApiResult(
@@ -31,8 +37,10 @@ class CartCubit extends Cubit<CartState> {
 
     emit(CartState(
       cartItems: [...state.cartItems, data],
-      totalAmount: computeTotal(),
+      totalAmount: state.totalAmount,
     ));
+
+    computeTotal();
   }
 
   void addQty(ShoeApiResult data) {
@@ -64,8 +72,10 @@ class CartCubit extends Cubit<CartState> {
 
     emit(CartState(
       cartItems: state.cartItems,
-      totalAmount: computeTotal(),
+      totalAmount: state.totalAmount,
     ));
+
+    computeTotal();
   }
 
   void lessQty(ShoeApiResult data) {
@@ -98,8 +108,10 @@ class CartCubit extends Cubit<CartState> {
 
     emit(CartState(
       cartItems: state.cartItems,
-      totalAmount: computeTotal(),
+      totalAmount: state.totalAmount,
     ));
+
+    computeTotal();
   }
 
   void removeItem(ShoeApiResult data) {
@@ -109,16 +121,56 @@ class CartCubit extends Cubit<CartState> {
 
     emit(CartState(
       cartItems: list,
-      totalAmount: computeTotal(),
+      totalAmount: state.totalAmount,
     ));
+
+    computeTotal();
   }
 
-  double computeTotal() {
+  void computeTotal() {
     double num = 0;
     for (var x in state.cartItems) {
       num = num + ((x.retailPrice?.toDouble() ?? 0.00) * (x.qty ?? 0));
     }
 
-    return num;
+    emit(CartState(
+      cartItems: state.cartItems,
+      stripePaymentStatus: state.stripePaymentStatus,
+      totalAmount: num.truncate(),
+    ));
+  }
+
+  void resetState() {
+    emit(const CartState());
+  }
+
+  Future<void> makePayment(
+      {required String amount, required String currency}) async {
+    try {
+      emit(CartState(
+        stripePaymentStatus: Status.initial,
+        cartItems: state.cartItems,
+        totalAmount: state.totalAmount,
+      ));
+
+      final isSuccess = await _stripeRepository.makePayment(
+        amount: amount,
+        currency: currency,
+      );
+
+      if (isSuccess) {
+        emit(CartState(
+          stripePaymentStatus: Status.success,
+          cartItems: state.cartItems,
+          totalAmount: state.totalAmount,
+        ));
+      }
+    } catch (e) {
+      emit(CartState(
+        stripePaymentStatus: Status.failure,
+        cartItems: state.cartItems,
+        totalAmount: state.totalAmount,
+      ));
+    }
   }
 }

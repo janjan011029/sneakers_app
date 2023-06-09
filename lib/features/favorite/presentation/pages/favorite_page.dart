@@ -62,7 +62,7 @@ class _FavoritePageState extends State<FavoritePage> {
               itemBuilder: (context, index) {
                 final item = state.favoriteItems[index];
                 final itemName = item.shoeName ?? '-';
-                final price = item.retailPrice?.toDouble() ?? 0.0;
+                final price = item.retailPrice ?? 0;
                 final img = item.thumbnail ?? '';
                 final isFavorite = item.isFavorite ?? false;
 

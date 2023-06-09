@@ -21,7 +21,7 @@ class ItemCard extends StatefulWidget {
   final bool isLike;
   final String itemName;
   final int qty;
-  final double price;
+  final int price;
   final String img;
   final VoidCallback onClick;
   final VoidCallback addToFav;

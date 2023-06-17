@@ -2,11 +2,11 @@ import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:sneakers_app/features/cart/presentation/pages/cart_page.dart';
 import 'package:sneakers_app/models/shoe_api_result.dart';
+import 'package:sneakers_app/onboarding_page.dart';
 
 import '../error_screen.dart';
 import '../features/shop/presentation/pages/item_details.dart';
 import '../features/auth/presentation/blocs/auth_state.dart';
-import '../features/auth/presentation/pages/login.dart';
 import '../features/dashboard/presentation/pages/dashboard.dart';
 
 class MyRouter {
@@ -19,7 +19,7 @@ class MyRouter {
       GoRoute(
         path: '/',
         builder: (context, state) {
-          return const Login();
+          return const OnBoardingPage();
         },
       ),
       GoRoute(

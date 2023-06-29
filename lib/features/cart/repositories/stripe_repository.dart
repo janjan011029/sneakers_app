@@ -2,14 +2,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:sneakers_app/api/client.dart';
 import 'package:sneakers_app/features/cart/repositories/istripe_repository.dart';
 import 'package:http/http.dart' as http;
 
-import '../presentation/pages/constant.dart';
+import '../../../utils/constant/app_config.dart';
 
 class StripeRepository implements IStripeRepository {
-  late DioClient _dioClient;
+  // late DioClient _dioClient;
   @override
   Future<bool> makePayment(
       {required String amount, required String currency}) async {
@@ -17,15 +16,14 @@ class StripeRepository implements IStripeRepository {
       Map<String, dynamic>? paymentIntent =
           await createPaymentIntent(amount: amount, currency: currency);
       //Payment Sheet
-      await Stripe.instance
-          .initPaymentSheet(
-              paymentSheetParameters: SetupPaymentSheetParameters(
-                  paymentIntentClientSecret: paymentIntent['client_secret'],
-                  // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
-                  // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
-                  style: ThemeMode.dark,
-                  merchantDisplayName: 'Adnan'))
-          .then((value) {});
+      await Stripe.instance.initPaymentSheet(
+          paymentSheetParameters: SetupPaymentSheetParameters(
+        paymentIntentClientSecret: paymentIntent['client_secret'],
+        // applePay: const PaymentSheetApplePay(merchantCountryCode: '+92',),
+        // googlePay: const PaymentSheetGooglePay(testEnv: true, currencyCode: "US", merchantCountryCode: "+92"),
+        style: ThemeMode.dark,
+        merchantDisplayName: 'Janjan',
+      ));
 
       ///now finally display payment sheeet
       // displayPaymentSheet();
@@ -50,7 +48,7 @@ class StripeRepository implements IStripeRepository {
       var response = await http.post(
         Uri.parse('https://api.stripe.com/v1/payment_intents'),
         headers: {
-          'Authorization': 'Bearer $SECRET_KEY',
+          'Authorization': 'Bearer $secretKey',
           'Content-Type': 'application/x-www-form-urlencoded'
         },
         body: body,

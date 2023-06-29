@@ -6,9 +6,11 @@ class CartState extends Equatable {
     this.totalAmount = 0,
     this.stripePaymentStatus = Status.initial,
   });
+
   final List<ShoeApiResult> cartItems;
   final int totalAmount;
   final Status stripePaymentStatus;
+
   @override
   List<Object?> get props => [
         cartItems,

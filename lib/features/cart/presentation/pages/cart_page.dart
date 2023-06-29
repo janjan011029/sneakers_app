@@ -35,8 +35,15 @@ class _CartPageState extends State<CartPage> {
           value: cartCubit,
           child: BlocConsumer<CartCubit, CartState>(
             listener: (context, state) async {
-              if (state.stripePaymentStatus == Status.success) {
+              final status = state.stripePaymentStatus;
+
+              if (status == Status.success) {
                 await _displayPaymentSheet();
+                cartCubit.resetState();
+              }
+
+              if (status == Status.failure) {
+                _snackbarError();
               }
             },
             builder: (context, state) {
@@ -139,7 +146,6 @@ class _CartPageState extends State<CartPage> {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
           ..showSnackBar(_snackbarSuccess());
-
         Navigator.pop(context);
       }).onError((error, stackTrace) {
         print('Error is:--->$error $stackTrace');
@@ -147,6 +153,7 @@ class _CartPageState extends State<CartPage> {
           ..hideCurrentSnackBar()
           ..showSnackBar(_snackbarError());
       });
+      return true;
     } on StripeException catch (e) {
       print('Error is:---> $e');
       showDialog(
@@ -154,8 +161,10 @@ class _CartPageState extends State<CartPage> {
           builder: (_) => const AlertDialog(
                 content: Text("Cancelled "),
               ));
+      return false;
     } catch (e) {
       print('$e');
+      return false;
     }
   }
 

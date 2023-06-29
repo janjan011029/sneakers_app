@@ -2,6 +2,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:sneakers_app/features/shop/presentation/pages/item_details.dart';
 
 import '../../../cart/presentation/cubits/cart_cubit.dart';
 import '../../../shop/presentation/widgets/item_card.dart';
@@ -40,7 +41,7 @@ class _FavoritePageState extends State<FavoritePage> {
               padding: const EdgeInsets.only(right: 15, top: 15),
               child: GestureDetector(
                 onTap: () {
-                  context.push('/cart');
+                  context.push('/cart', extra: context.read<CartCubit>());
                 },
                 child: badges.Badge(
                     showBadge: isShow,
@@ -80,7 +81,10 @@ class _FavoritePageState extends State<FavoritePage> {
                   onClick: () {
                     context.pushNamed(
                       'Item-Details',
-                      extra: item,
+                      extra: ItemDetailsParams(
+                        data: item,
+                        cartCubit: context.read<CartCubit>(),
+                      ),
                     );
                   },
                   addToFav: () =>

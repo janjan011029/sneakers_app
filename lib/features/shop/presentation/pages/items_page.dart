@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
 import 'package:badges/badges.dart' as badges;
+import 'package:sneakers_app/features/shop/presentation/pages/item_details.dart';
 
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
@@ -95,7 +96,10 @@ class _ItemsPageState extends State<ItemsPage> {
                           onClick: () {
                             context.pushNamed(
                               'Item-Details',
-                              extra: shoes,
+                              extra: ItemDetailsParams(
+                                data: shoes,
+                                cartCubit: context.read<CartCubit>(),
+                              ),
                             );
                           },
                           addToCart: () {

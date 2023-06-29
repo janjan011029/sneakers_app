@@ -4,13 +4,24 @@ import 'package:sneakers_app/models/shoe_api_result.dart';
 import 'package:sneakers_app/widgets/rounded_button.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
+import '../../../cart/presentation/cubits/cart_cubit.dart';
+
+class ItemDetailsParams {
+  const ItemDetailsParams({
+    required this.data,
+    required this.cartCubit,
+  });
+  final ShoeApiResult data;
+  final CartCubit cartCubit;
+}
+
 class ItemDetails extends StatefulWidget {
   const ItemDetails({
     super.key,
-    required this.data,
+    required this.params,
   });
 
-  final ShoeApiResult data;
+  final ItemDetailsParams params;
 
   @override
   State<ItemDetails> createState() => _ItemDetailsState();
@@ -21,9 +32,9 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   @override
   Widget build(BuildContext context) {
-    final title = widget.data.silhoutte ?? '-';
-    final isFavorite = widget.data.isFavorite ?? false;
-    final releaseDate = widget.data.releaseDate ?? '';
+    final title = widget.params.data.silhoutte ?? '-';
+    final isFavorite = widget.params.data.isFavorite ?? false;
+    final releaseDate = widget.params.data.releaseDate ?? '';
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -141,7 +152,7 @@ class _ItemDetailsState extends State<ItemDetails> {
             children: [
               Text('Price', style: Theme.of(context).textTheme.bodyMedium),
               Text(
-                '\$${widget.data.retailPrice}',
+                '\$${widget.params.data.retailPrice}',
                 style: Theme.of(context).textTheme.headlineLarge?.copyWith(
                       fontSize: 25,
                       fontWeight: FontWeight.bold,
@@ -155,6 +166,7 @@ class _ItemDetailsState extends State<ItemDetails> {
               padding: const EdgeInsets.only(left: 15),
               child: RoundedButton(
                 onPressed: () {
+                  widget.params.cartCubit.addToCart(widget.params.data);
                   ScaffoldMessenger.of(context)
                     ..hideCurrentSnackBar()
                     ..showSnackBar(_snackbar());
@@ -179,7 +191,7 @@ class _ItemDetailsState extends State<ItemDetails> {
       content: AwesomeSnackbarContent(
         color: Colors.green,
         title: 'Successfully Added!',
-        message: '${widget.data.shoeName} is now added to cart',
+        message: '${widget.params.data.shoeName} is now added to cart',
 
         /// change contentType to ContentType.success, ContentType.warning or ContentType.help for variants
         contentType: ContentType.success,
@@ -189,7 +201,7 @@ class _ItemDetailsState extends State<ItemDetails> {
 
   Hero _renderImage() {
     return Hero(
-      tag: widget.data.thumbnail ?? '',
+      tag: widget.params.data.thumbnail ?? '',
       child: Container(
         width: double.infinity,
         decoration: const BoxDecoration(
@@ -201,7 +213,7 @@ class _ItemDetailsState extends State<ItemDetails> {
         child: Center(
           child: CachedNetworkImage(
             fit: BoxFit.fill,
-            imageUrl: widget.data.thumbnail ?? '',
+            imageUrl: widget.params.data.thumbnail ?? '',
             progressIndicatorBuilder: (context, url, downloadProgress) =>
                 CircularProgressIndicator(value: downloadProgress.progress),
             errorWidget: (context, url, error) => const Icon(Icons.error),
@@ -343,7 +355,7 @@ class _ItemDetailsState extends State<ItemDetails> {
         ),
         const SizedBox(height: 5),
         Text(
-          widget.data.description ?? '',
+          widget.params.data.description ?? '',
           style: Theme.of(context).textTheme.bodyMedium,
         ),
       ],

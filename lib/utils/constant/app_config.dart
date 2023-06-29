@@ -1,2 +1,2 @@
-const SECRET_KEY =
+const secretKey =
     'sk_test_51MqzRIEZvWPAlCUvIHnYhjfuXrsDiKnZIR8U8iGaAlO1UORVzV6QbZAHwsF8WCH1nygSAQUa6Zc3xhJ6CtW3whyD00rDLBiHEs';

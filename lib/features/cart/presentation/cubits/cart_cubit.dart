@@ -164,6 +164,12 @@ class CartCubit extends Cubit<CartState> {
           cartItems: state.cartItems,
           totalAmount: state.totalAmount,
         ));
+      } else {
+        emit(CartState(
+          stripePaymentStatus: Status.failure,
+          cartItems: state.cartItems,
+          totalAmount: state.totalAmount,
+        ));
       }
     } catch (e) {
       emit(CartState(

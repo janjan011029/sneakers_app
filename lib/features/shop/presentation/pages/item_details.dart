@@ -4,6 +4,7 @@ import 'package:sneakers_app/models/shoe_api_result.dart';
 import 'package:sneakers_app/widgets/rounded_button.dart';
 import 'package:awesome_snackbar_content/awesome_snackbar_content.dart';
 
+import '../../../../utils/constant/app_style.dart';
 import '../../../cart/presentation/cubits/cart_cubit.dart';
 
 class ItemDetailsParams {
@@ -171,7 +172,10 @@ class _ItemDetailsState extends State<ItemDetails> {
                     ..hideCurrentSnackBar()
                     ..showSnackBar(_snackbar());
                 },
-                title: "Add to Cart",
+                title: const Text(
+                  'Add to Cart',
+                  style: AppStyle.defaultTitle,
+                ),
                 color: Colors.black,
               ),
             ),

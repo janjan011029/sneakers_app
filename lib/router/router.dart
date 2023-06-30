@@ -5,15 +5,12 @@ import 'package:sneakers_app/onboarding_page.dart';
 
 import '../error_screen.dart';
 import '../features/shop/presentation/pages/item_details.dart';
-import '../features/auth/presentation/blocs/auth_state.dart';
 import '../features/dashboard/presentation/pages/dashboard.dart';
 
 class MyRouter {
-  final provider = AuthStateProvider();
-
   late final GoRouter routes = GoRouter(
     errorBuilder: (context, state) => const ErrorScreen(),
-    initialLocation: provider.isLoggedIn ? '/dashboard' : '/',
+    initialLocation: '/',
     routes: <RouteBase>[
       GoRoute(
         path: '/',

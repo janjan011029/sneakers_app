@@ -6,6 +6,7 @@ import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
 import 'package:sneakers_app/features/cart/presentation/widgets/item_cart_card.dart';
 
 import '../../../../utils/constant/app_enums.dart';
+import '../../../../utils/constant/app_style.dart';
 import '../../../../widgets/rounded_button.dart';
 
 class CartPage extends StatefulWidget {
@@ -50,44 +51,46 @@ class _CartPageState extends State<CartPage> {
               return BlocBuilder<CartCubit, CartState>(
                 builder: (context, cartState) {
                   final items = cartState.cartItems;
+
                   return Column(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Expanded(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: items.length,
-                          itemBuilder: (context, index) {
-                            final item = items[index];
-                            final shoeName = item.shoeName ?? '-';
-                            final price = item.retailPrice?.toDouble() ?? 0.00;
-                            final img = item.thumbnail ?? '';
-                            final qty = item.qty ?? 0;
-
-                            if (items.isEmpty) {
-                              return const Center(
+                      items.isEmpty
+                          ? const Expanded(
+                              child: Center(
                                 child: Text('No items found.'),
-                              );
-                            }
+                              ),
+                            )
+                          : Expanded(
+                              child: ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: items.length,
+                                itemBuilder: (context, index) {
+                                  final item = items[index];
+                                  final shoeName = item.shoeName ?? '-';
+                                  final price =
+                                      item.retailPrice?.toDouble() ?? 0.00;
+                                  final img = item.thumbnail ?? '';
+                                  final qty = item.qty ?? 0;
 
-                            return ItemCartCard(
-                              itemName: shoeName,
-                              price: price,
-                              img: img,
-                              qty: qty,
-                              addQty: () {
-                                context.read<CartCubit>().addQty(item);
-                              },
-                              lessQty: () {
-                                context.read<CartCubit>().lessQty(item);
-                              },
-                              onDelete: (context) {
-                                context.read<CartCubit>().removeItem(item);
-                              },
-                            );
-                          },
-                        ),
-                      ),
+                                  return ItemCartCard(
+                                    itemName: shoeName,
+                                    price: price,
+                                    img: img,
+                                    qty: qty,
+                                    addQty: () {
+                                      cartCubit.addQty(item);
+                                    },
+                                    lessQty: () {
+                                      cartCubit.lessQty(item);
+                                    },
+                                    onDelete: (context) {
+                                      cartCubit.removeItem(item);
+                                    },
+                                  );
+                                },
+                              ),
+                            ),
                       _renderTotal(context),
                     ],
                   );
@@ -124,13 +127,18 @@ class _CartPageState extends State<CartPage> {
             child: Padding(
               padding: const EdgeInsets.only(left: 15),
               child: RoundedButton(
-                onPressed: () {
-                  context.read<CartCubit>().makePayment(
-                        amount: total,
-                        currency: 'USD',
-                      );
-                },
-                title: "Check-out",
+                onPressed: total == "0"
+                    ? null
+                    : () {
+                        context.read<CartCubit>().makePayment(
+                              amount: total,
+                              currency: 'USD',
+                            );
+                      },
+                title: const Text(
+                  'Checkout',
+                  style: AppStyle.defaultTitle,
+                ),
                 color: Colors.black,
               ),
             ),

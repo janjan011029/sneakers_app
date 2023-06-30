@@ -160,6 +160,10 @@ class NavigationDrawer extends StatelessWidget {
             icon: TablerIcons.bell,
             title: 'Notifications',
           ),
+          const DrawerIconText(
+            icon: TablerIcons.logout,
+            title: 'Logout',
+          ),
         ],
       ),
     );

@@ -16,7 +16,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   final UserRepository _userRepository;
 
   StreamSubscription<auth.User?>? authUserSubscription;
-  StreamSubscription<UserModel?>? userSubscription;
+  StreamSubscription<User?>? userSubscription;
 
   AuthBloc({
     required AuthRepository authRepository,
@@ -25,6 +25,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         _userRepository = userRepository,
         super(const AuthState()) {
     on<AuthUserChanged>(_authUserChanged);
+    on<LoginWithEmailAndPassword>(_loginWithEmailAndPassword);
 
     authUserSubscription = _authRepository.user.listen((authUser) {
       print('Auth User: $authUser');
@@ -58,5 +59,13 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     authUserSubscription?.cancel();
     userSubscription?.cancel();
     return super.close();
+  }
+
+  FutureOr<void> _loginWithEmailAndPassword(
+      LoginWithEmailAndPassword event, Emitter<AuthState> emit) async {
+    await _authRepository.loginWithEmailAndPassword(
+      email: event.username,
+      password: event.password,
+    );
   }
 }

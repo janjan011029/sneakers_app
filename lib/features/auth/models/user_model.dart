@@ -1,76 +1,53 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:equatable/equatable.dart';
 
-class UserModel extends Equatable {
-  const UserModel({
-    this.id,
-    this.fullName = '',
-    this.email = '',
-    this.address = '',
-    this.city = '',
-    this.country = '',
-    this.zipCode = '',
+class User extends Equatable {
+  const User({
+    required this.id,
+    this.email,
+    this.name,
+    this.photo,
   });
 
-  final String? id;
-  final String fullName;
-  final String email;
-  final String address;
-  final String city;
-  final String country;
-  final String zipCode;
+  final String id;
+  final String? email;
+  final String? name;
+  final String? photo;
 
-  UserModel copyWith({
-    String? id,
-    String? fullName,
-    String? email,
-    String? address,
-    String? city,
-    String? country,
-    String? zipCode,
-  }) {
-    return UserModel(
-      id: id ?? this.id,
-      fullName: fullName ?? this.fullName,
-      email: email ?? this.email,
-      address: address ?? this.address,
-      city: city ?? this.city,
-      country: country ?? this.country,
-      zipCode: zipCode ?? this.zipCode,
+  static const empty = User(id: '');
+
+  bool get isEmpty => this == User.empty;
+  bool get isNotEmpty => this != User.empty;
+
+  factory User.fromSnapshot(DocumentSnapshot snap) {
+    return User(
+      id: snap.id,
+      email: snap["email"],
+      name: snap["name"],
+      photo: snap["photo"],
     );
   }
 
-  factory UserModel.fromSnapshot(DocumentSnapshot snap) {
-    return UserModel(
-      id: snap.id,
-      fullName: snap["fullName"],
-      email: snap["email"],
-      address: snap["address"],
-      city: snap["city"],
-      country: snap["country"],
-      zipCode: snap["zipCode"],
+  factory User.fromDocument(DocumentSnapshot doc) {
+    return User(
+      id: doc.id,
+      email: doc["email"],
+      name: doc["name"],
+      photo: doc["photo"],
     );
   }
 
   Map<String, dynamic> toDocument() {
     return {
-      'fullName': fullName,
       "email": email,
-      "address": address,
-      "city": city,
-      "country": country,
-      "zipCode": zipCode,
     };
   }
 
   @override
   List<Object?> get props => [
         id,
-        fullName,
         email,
-        address,
-        city,
-        country,
-        zipCode,
+        name,
+        photo,
       ];
 }

@@ -12,10 +12,25 @@ class AuthUserChanged extends AuthEvent {
   });
 
   final auth.User? authUser;
-  final UserModel? user;
+  final User? user;
   @override
   List<Object?> get props => [
         authUser,
         user,
+      ];
+}
+
+class LoginWithEmailAndPassword extends AuthEvent {
+  LoginWithEmailAndPassword({
+    required this.username,
+    required this.password,
+  });
+  final String username;
+  final String password;
+
+  @override
+  List<Object?> get props => [
+        username,
+        password,
       ];
 }

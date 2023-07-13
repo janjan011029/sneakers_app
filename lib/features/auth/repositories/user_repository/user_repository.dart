@@ -9,7 +9,7 @@ class UserRepository implements IUserRepository {
       : _firebaseFirestore = firebaseFirestore ?? FirebaseFirestore.instance;
 
   @override
-  Future<void> createUser(UserModel user) async {
+  Future<void> createUser(User user) async {
     await _firebaseFirestore
         .collection('user')
         .doc(user.id)
@@ -17,17 +17,17 @@ class UserRepository implements IUserRepository {
   }
 
   @override
-  Stream<UserModel> getUser(String id) {
+  Stream<User> getUser(String id) {
     print("Getting user data from Cloud Firestore");
     return _firebaseFirestore
         .collection('users')
         .doc(id)
         .snapshots()
-        .map((snap) => UserModel.fromSnapshot(snap));
+        .map((snap) => User.fromSnapshot(snap));
   }
 
   @override
-  Future<void> updateUser(UserModel user) {
+  Future<void> updateUser(User user) {
     return _firebaseFirestore
         .collection('users')
         .doc(user.id)

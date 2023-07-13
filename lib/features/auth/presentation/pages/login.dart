@@ -17,7 +17,22 @@ class Login extends StatefulWidget {
 }
 
 class _LoginState extends State<Login> {
+  TextEditingController userName = TextEditingController();
+  TextEditingController passWord = TextEditingController();
   bool isView = false;
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    userName.dispose();
+    passWord.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -58,12 +73,14 @@ class _LoginState extends State<Login> {
                   child: Column(
                     children: [
                       // const Label(title: 'Email Address'),
-                      const TextFormFieldLabel(
+                      TextFormFieldLabel(
+                        textEditingController: userName,
                         labelTitle: 'Username',
                         hintText: 'Username...',
                       ),
                       const SizedBox(height: 10),
                       TextFormFieldLabel(
+                        textEditingController: passWord,
                         hintText: 'Enter password...',
                         labelTitle: 'Password',
                         isObscure: !isView,
@@ -82,15 +99,34 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   child: Container(
                     padding: const EdgeInsets.only(top: 5, left: 1),
-                    child: RoundedButton(
-                      color: Colors.black,
-                      title: const Text(
-                        'Login',
-                        style: AppStyle.defaultTitle,
-                      ),
-                      onPressed: () {
-                        context.go('/dashboard');
+                    child: BlocListener<AuthBloc, AuthState>(
+                      listener: (context, authState) {
+                        final status = authState.authStatus;
+
+                        if (status == AuthStatus.authenticated) {
+                          context.go('/dashboard');
+                        }
                       },
+                      child: BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, authState) {
+                          return RoundedButton(
+                            color: Colors.black,
+                            title: const Text(
+                              'Login',
+                              style: AppStyle.defaultTitle,
+                            ),
+                            onPressed: () {
+                              // context.go('/dashboard');
+                              context
+                                  .read<AuthBloc>()
+                                  .add(LoginWithEmailAndPassword(
+                                    username: userName.text,
+                                    password: passWord.text,
+                                  ));
+                            },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),

@@ -7,12 +7,14 @@ class TextFormFieldLabel extends StatelessWidget {
   final bool numberOnly;
   final VoidCallback? onTap;
   final bool isPassword;
+  final TextEditingController textEditingController;
   const TextFormFieldLabel({
     Key? key,
     this.isObscure = false,
     this.numberOnly = false,
     required this.hintText,
     required this.labelTitle,
+    required this.textEditingController,
     this.onTap,
     this.isPassword = false,
   }) : super(key: key);
@@ -33,6 +35,7 @@ class TextFormFieldLabel extends StatelessWidget {
           ),
         ),
         TextFormField(
+          controller: textEditingController,
           keyboardType: numberOnly ? TextInputType.number : TextInputType.text,
           decoration: isPassword
               ? InputDecoration(

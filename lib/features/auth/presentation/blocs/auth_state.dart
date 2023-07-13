@@ -11,12 +11,12 @@ class AuthState extends Equatable {
 
   final AuthStatus authStatus;
   final auth.User? authUser;
-  final UserModel? user;
+  final User? user;
 
   AuthState copyWith({
     AuthStatus? authStatus,
     auth.User? authUser,
-    UserModel? user,
+    User? user,
   }) {
     return AuthState(
       authStatus: authStatus ?? this.authStatus,

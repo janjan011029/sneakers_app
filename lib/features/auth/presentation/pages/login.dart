@@ -6,6 +6,7 @@ import 'package:sneakers_app/features/auth/repositories/auth_repository/auth_rep
 import 'package:sneakers_app/features/auth/repositories/user_repository/user_repository.dart';
 import 'package:sneakers_app/utils/constant/app_style.dart';
 
+import '../../../../gen/assets.gen.dart';
 import '../../../../router/route_utils.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../../../widgets/text_form_field_label.dart';
@@ -63,9 +64,9 @@ class _LoginState extends State<Login> {
                 Container(
                   height: 180,
                   width: 350,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                       image: DecorationImage(
-                    image: AssetImage('assets/sneakers_app.png'),
+                    image: AssetImage(Assets.images.sneakersApp.path),
                     fit: BoxFit.fitWidth,
                   )),
                 ),

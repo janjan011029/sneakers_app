@@ -6,6 +6,7 @@ import 'package:badges/badges.dart' as badges;
 import 'package:sneakers_app/features/cart/presentation/cubits/cart_cubit.dart';
 
 import '../../../../api/client.dart';
+import '../../../../gen/assets.gen.dart';
 import '../../../../utils/constant/app_enums.dart';
 import '../../../../widgets/app_home_loading_shimmer.dart';
 import '../../../../widgets/category.dart';
@@ -179,10 +180,13 @@ class NavigationDrawer extends StatelessWidget {
           Center(
             child: Container(
               height: 100,
-              decoration: const BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white,
-                  image: DecorationImage(image: AssetImage('assets/me.jpg'))),
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
+                image: DecorationImage(
+                  image: AssetImage(Assets.images.me.path),
+                ),
+              ),
             ),
           ),
           const SizedBox(height: 10),

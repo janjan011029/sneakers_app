@@ -58,6 +58,12 @@ class _FavoritePageState extends State<FavoritePage> {
         ),
         body: BlocBuilder<FavoriteCubit, FavoriteState>(
           builder: (context, state) {
+            if (state.favoriteItems.length == 0) {
+              return const Center(
+                child: Text('No items found.'),
+              );
+            }
+
             return ListView.builder(
               itemCount: state.favoriteItems.length,
               itemBuilder: (context, index) {
@@ -66,12 +72,6 @@ class _FavoritePageState extends State<FavoritePage> {
                 final price = item.retailPrice ?? 0;
                 final img = item.thumbnail ?? '';
                 final isFavorite = item.isFavorite ?? false;
-
-                if (state.favoriteItems.isEmpty) {
-                  return const Center(
-                    child: Text('No items found.'),
-                  );
-                }
 
                 return ItemCard(
                   itemName: itemName,

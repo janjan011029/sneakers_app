@@ -72,6 +72,9 @@ class MyRouter {
   ShellRoute _shellRoute() {
     return ShellRoute(
       navigatorKey: _shellNavigatorKey,
+      builder: (context, state, child) {
+        return GoDashboard(dashboardChild: child);
+      },
       routes: [
         GoRoute(
           parentNavigatorKey: _shellNavigatorKey,
@@ -112,9 +115,6 @@ class MyRouter {
           },
         ),
       ],
-      builder: (context, state, child) {
-        return GoDashboard(dashboardChild: child);
-      },
     );
   }
 }

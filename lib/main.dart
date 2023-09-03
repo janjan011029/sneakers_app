@@ -1,11 +1,12 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_stripe/flutter_stripe.dart';
-import 'package:sneakers_app/features/auth/presentation/blocs/auth_bloc.dart';
-import 'package:sneakers_app/features/auth/repositories/auth_repository/auth_repository.dart';
-import 'package:sneakers_app/features/auth/repositories/user_repository/user_repository.dart';
-import 'package:sneakers_app/router/router.dart';
-import 'package:firebase_core/firebase_core.dart';
+
+import 'features/auth/presentation/blocs/auth_bloc.dart';
+import 'features/auth/repositories/auth_repository/auth_repository.dart';
+import 'features/auth/repositories/user_repository/user_repository.dart';
+import 'router/router.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();

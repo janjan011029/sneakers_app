@@ -6,6 +6,7 @@ import 'package:sneakers_app/features/auth/repositories/auth_repository/auth_rep
 import 'package:sneakers_app/features/auth/repositories/user_repository/user_repository.dart';
 import 'package:sneakers_app/utils/constant/app_style.dart';
 
+import '../../../../router/route_utils.dart';
 import '../../../../widgets/rounded_button.dart';
 import '../../../../widgets/text_form_field_label.dart';
 
@@ -116,13 +117,13 @@ class _LoginState extends State<Login> {
                               style: AppStyle.defaultTitle,
                             ),
                             onPressed: () {
-                              // context.go('/dashboard');
-                              context
-                                  .read<AuthBloc>()
-                                  .add(LoginWithEmailAndPassword(
-                                    username: userName.text,
-                                    password: passWord.text,
-                                  ));
+                              context.go(AppPage.home.path);
+                              // context
+                              //     .read<AuthBloc>()
+                              //     .add(LoginWithEmailAndPassword(
+                              //       username: userName.text,
+                              //       password: passWord.text,
+                              //     ));
                             },
                           );
                         },
@@ -135,15 +136,13 @@ class _LoginState extends State<Login> {
                       const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
                   child: Container(
                     padding: const EdgeInsets.only(top: 5, left: 1),
-                    child: const RoundedButton(
+                    child: RoundedButton(
                       color: Colors.black,
                       title: Text(
                         'Signup',
                         style: AppStyle.defaultTitle,
                       ),
-                      // onPressed: () {
-                      //   context.go('/signup');
-                      // },
+                      onPressed: () {},
                     ),
                   ),
                 ),

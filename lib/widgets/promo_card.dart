@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../gen/assets.gen.dart';
+
 class PromoCard extends StatelessWidget {
   const PromoCard({
     super.key,
@@ -32,9 +34,9 @@ class PromoCard extends StatelessWidget {
               padding: const EdgeInsets.only(top: 50),
               height: 150,
               width: 150,
-              decoration: const BoxDecoration(
+              decoration: BoxDecoration(
                   image: DecorationImage(
-                image: AssetImage('assets/air_max.png'),
+                image: AssetImage(Assets.images.airMax.path),
                 fit: BoxFit.fitWidth,
               )),
             ),

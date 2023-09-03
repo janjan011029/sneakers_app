@@ -61,34 +61,36 @@ class _ItemDetailsState extends State<ItemDetails> {
             )
           ],
         ),
-        body: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                _renderImage(),
-                const SizedBox(height: 10),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      _renderRating(context, releaseDate),
-                      const SizedBox(height: 5),
-                      _renderDescription(context),
-                      const SizedBox(height: 10),
-                      _renderPickColor(context),
-                      const SizedBox(height: 10),
-                      _renderSizePicker(context),
-                    ],
+        body: SingleChildScrollView(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  _renderImage(),
+                  const SizedBox(height: 10),
+                  Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        _renderRating(context, releaseDate),
+                        const SizedBox(height: 5),
+                        _renderDescription(context),
+                        const SizedBox(height: 10),
+                        _renderPickColor(context),
+                        const SizedBox(height: 10),
+                        _renderSizePicker(context),
+                      ],
+                    ),
                   ),
-                ),
-              ],
-            ),
-            _renderTotal(context),
-          ],
+                ],
+              ),
+              _renderTotal(context),
+            ],
+          ),
         ),
       ),
     );

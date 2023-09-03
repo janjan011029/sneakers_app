@@ -1,0 +1,6 @@
+projectKey=sneakers-app
+serverUrl=http://localhost:9000
+serverVersion=8.9.10.61524
+dashboardUrl=http://localhost:9000/dashboard?id=sneakers-app
+ceTaskId=AYm7yTHy273dhaZz7TzY
+ceTaskUrl=http://localhost:9000/api/ce/task?id=AYm7yTHy273dhaZz7TzY

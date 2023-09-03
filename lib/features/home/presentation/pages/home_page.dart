@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                 padding: const EdgeInsets.only(right: 15, top: 15),
                 child: GestureDetector(
                   onTap: () {
-                    context.push('/cart');
+                    context.push('/cart', extra: context.read<CartCubit>());
                   },
                   child: badges.Badge(
                       showBadge: isShow,

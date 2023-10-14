@@ -76,12 +76,14 @@ class _LoginState extends State<Login> {
                     children: [
                       // const Label(title: 'Email Address'),
                       TextFormFieldLabel(
+                        key: Key('UsernameKey'),
                         textEditingController: userName,
                         labelTitle: 'Username',
                         hintText: 'Username...',
                       ),
                       const SizedBox(height: 10),
                       TextFormFieldLabel(
+                        key: Key('PasswordKey'),
                         textEditingController: passWord,
                         hintText: 'Enter password...',
                         labelTitle: 'Password',
@@ -103,11 +105,11 @@ class _LoginState extends State<Login> {
                     padding: const EdgeInsets.only(top: 5, left: 1),
                     child: BlocListener<AuthBloc, AuthState>(
                       listener: (context, authState) {
-                        final status = authState.authStatus;
+                        // final status = authState.authStatus;
 
-                        if (status == AuthStatus.authenticated) {
-                          context.go('/dashboard');
-                        }
+                        // if (status == AuthStatus.authenticated) {
+                        //   context.go('/dashboard');
+                        // }
                       },
                       child: BlocBuilder<AuthBloc, AuthState>(
                         builder: (context, authState) {
@@ -119,12 +121,6 @@ class _LoginState extends State<Login> {
                             ),
                             onPressed: () {
                               context.go(AppPage.home.path);
-                              // context
-                              //     .read<AuthBloc>()
-                              //     .add(LoginWithEmailAndPassword(
-                              //       username: userName.text,
-                              //       password: passWord.text,
-                              //     ));
                             },
                           );
                         },

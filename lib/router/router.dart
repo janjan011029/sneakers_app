@@ -25,6 +25,10 @@ class MyRouter {
       const NoTransitionPage(child: HomePage());
   Page<dynamic> _itemsPage(BuildContext context, GoRouterState state) =>
       const NoTransitionPage(child: ItemsPage());
+  Page<dynamic> _favoritePage(BuildContext context, GoRouterState state) =>
+      const NoTransitionPage(child: FavoritePage());
+  Page<dynamic> _accountPage(BuildContext context, GoRouterState state) =>
+      const NoTransitionPage(child: AccountPage());
 
   late final GoRouter routes = GoRouter(
     errorBuilder: (context, state) => const ErrorScreen(),
@@ -92,17 +96,13 @@ class MyRouter {
           parentNavigatorKey: _shellNavigatorKey,
           path: AppPage.favorite.path,
           name: AppPage.favorite.name,
-          builder: (context, state) {
-            return const FavoritePage();
-          },
+          pageBuilder: _favoritePage,
         ),
         GoRoute(
           parentNavigatorKey: _shellNavigatorKey,
           path: AppPage.account.path,
           name: AppPage.account.name,
-          builder: (context, state) {
-            return const AccountPage();
-          },
+          pageBuilder: _accountPage,
         ),
         GoRoute(
           parentNavigatorKey: _shellNavigatorKey,

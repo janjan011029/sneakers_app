@@ -4,11 +4,11 @@ Welcome to the Sneakers App E-Commerce project! This application allows users to
 
 ## Features
 
-* Browse a wide selection of sneakers.
-* View detailed product information and images.
-* Add items to the shopping cart.
-* Proceed to secure online payment using Stripe.
-* Receive email confirmation after successful payment.
+*  Browse a wide selection of sneakers.
+*  View detailed product information and images.
+*  Add items to the shopping cart.
+*  Proceed to secure online payment using Stripe.
+*  Receive email confirmation after successful payment.
 
 ## Technologies Used
 

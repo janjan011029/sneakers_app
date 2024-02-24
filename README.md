@@ -4,15 +4,15 @@ Welcome to the Sneakers App E-Commerce project! This application allows users to
 
 ## Features
 
-*Browse a wide selection of sneakers.
-*View detailed product information and images.
-*Add items to the shopping cart.
-*Proceed to secure online payment using Stripe.
-*Receive email confirmation after successful payment.
+* Browse a wide selection of sneakers.
+* View detailed product information and images.
+* Add items to the shopping cart.
+* Proceed to secure online payment using Stripe.
+* Receive email confirmation after successful payment.
 
 ## Technologies Used
 
-*Flutter: Cross-platform framework for building mobile applications.
-*Dart: Programming language used with Flutter.
-*Stripe API: Integration for secure online payments.
-*Firebase: Backend services for user authentication, database storage, and email notifications.
+* Flutter: Cross-platform framework for building mobile applications.
+* Dart: Programming language used with Flutter.
+* Stripe API: Integration for secure online payments.
+* Firebase: Backend services for user authentication, database storage, and email notifications.

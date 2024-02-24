@@ -1,16 +1,18 @@
-# sneakers_app
+# Sneakers App E-Commerce
 
-A new Flutter project.
+Welcome to the Sneakers App E-Commerce project! This application allows users to shop for basketball shoes and proceed to payment using Stripe's online card payment system.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+*Browse a wide selection of sneakers.
+*View detailed product information and images.
+*Add items to the shopping cart.
+*Proceed to secure online payment using Stripe.
+*Receive email confirmation after successful payment.
 
-A few resources to get you started if this is your first Flutter project:
+## Technologies Used
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+*Flutter: Cross-platform framework for building mobile applications.
+*Dart: Programming language used with Flutter.
+*Stripe API: Integration for secure online payments.
+*Firebase: Backend services for user authentication, database storage, and email notifications.

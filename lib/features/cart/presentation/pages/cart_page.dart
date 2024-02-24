@@ -39,8 +39,10 @@ class _CartPageState extends State<CartPage> {
               final status = state.stripePaymentStatus;
 
               if (status == Status.success) {
-                await _displayPaymentSheet();
-                cartCubit.resetState();
+                final isError = await _displayPaymentSheet();
+                if (!isError) {
+                  cartCubit.resetState();
+                }
               }
 
               if (status == Status.failure) {

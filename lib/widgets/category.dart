@@ -65,7 +65,7 @@ class CategoryCard extends StatelessWidget {
                                   color: Colors.black,
                                   fontSize: 16,
                                 ),
-                            maxLines: 2,
+                            maxLines: 1,
                             overflow: TextOverflow.ellipsis,
                           ),
                         ),

@@ -120,7 +120,7 @@ class _LoginState extends State<Login> {
                               style: AppStyle.defaultTitle,
                             ),
                             onPressed: () {
-                              context.go(AppPage.home.path);
+                              context.go("/dashboard");
                             },
                           );
                         },

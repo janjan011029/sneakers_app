@@ -1,3 +1,4 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_tabler_icons/flutter_tabler_icons.dart';
@@ -71,7 +72,21 @@ class _HomePageState extends State<HomePage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const PromoCard(),
+                SizedBox(height: 5),
+                // const PromoCard(),
+                CarouselSlider(
+                  options: CarouselOptions(height: 200, viewportFraction: 0.8),
+                  items: [1, 2, 3, 4, 5].map((i) {
+                    return Builder(
+                      builder: (BuildContext context) {
+                        return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: PromoCard(),
+                        );
+                      },
+                    );
+                  }).toList(),
+                ),
                 const SizedBox(height: 10),
                 _renderCategory(),
                 const SizedBox(height: 10),
@@ -116,12 +131,27 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Text _renderCategory() {
-    return const Text(
-      'POPULAR PRODUCTS',
-      style: TextStyle(
-        fontWeight: FontWeight.bold,
-        fontSize: 16,
+  Padding _renderCategory() {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Popular Products',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+          const Text(
+            'View All',
+            style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+                color: Colors.blueAccent),
+          ),
+        ],
       ),
     );
   }

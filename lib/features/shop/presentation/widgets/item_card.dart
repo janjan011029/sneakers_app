@@ -35,30 +35,27 @@ class _ItemCardState extends State<ItemCard> {
   final x = Random();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(5.0),
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(
-            Radius.circular(20),
+    return Container(
+      width: double.infinity,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(
+          Radius.circular(20),
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.5),
+            spreadRadius: 1,
+            blurRadius: 2,
+            offset: const Offset(0, 2), // changes position of shadow
           ),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withOpacity(0.5),
-              spreadRadius: 1,
-              blurRadius: 2,
-              offset: const Offset(0, 2), // changes position of shadow
-            ),
-          ],
-        ),
-        child: Row(
-          children: [
-            _renderImage(),
-            _renderDetails(3),
-          ],
-        ),
+        ],
+      ),
+      child: Row(
+        children: [
+          _renderImage(),
+          _renderDetails(3),
+        ],
       ),
     );
   }

@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/features/favorite/presentation/cubits/favorite_cubit.dart';
 import 'package:badges/badges.dart' as badges;
 import 'package:sneakers_app/features/shop/presentation/pages/item_details.dart';
+import 'package:sneakers_app/widgets/appbar_search_widget.dart';
 
 import '../../../../api/client.dart';
 import '../../../../utils/constant/app_enums.dart';
@@ -30,10 +31,11 @@ class _ItemsPageState extends State<ItemsPage> {
 
   @override
   Widget build(BuildContext context) {
-    bool isShow =
-        context.watch<CartCubit>().state.cartItems.isEmpty ? false : true;
-    String bagdeCount =
-        context.watch<CartCubit>().state.cartItems.length.toString();
+    final cartItems = context.watch<CartCubit>().state.cartItems;
+    bool isShow = cartItems.isEmpty ? false : true;
+    String bagdeCount = cartItems.length.toString();
+    final searchController = TextEditingController();
+
     return MultiBlocProvider(
       providers: [
         BlocProvider<ShopBloc>(
@@ -46,25 +48,46 @@ class _ItemsPageState extends State<ItemsPage> {
       child: SafeArea(
         child: Scaffold(
           appBar: AppBar(
+            toolbarHeight: 100,
             backgroundColor: Colors.black,
-            title: const Text('Shopping'),
+            title: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text('Shopping'),
+                AppBarSearchWidget(
+                  controller: searchController,
+                  hintText: 'Search product...',
+                  onChanged: (val) {
+                    print(val);
+                  },
+                ),
+              ],
+            ),
             elevation: 0,
             actions: [
               Padding(
-                padding: const EdgeInsets.only(right: 15, top: 15),
-                child: GestureDetector(
-                  onTap: () {
-                    context.push('/cart', extra: context.read<CartCubit>());
-                  },
-                  child: badges.Badge(
-                      showBadge: isShow,
-                      badgeContent: Text(
-                        bagdeCount,
-                        style: const TextStyle(
-                          color: Colors.white,
+                padding: const EdgeInsets.only(right: 20, top: 20),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        context.push('/cart', extra: context.read<CartCubit>());
+                      },
+                      child: badges.Badge(
+                        showBadge: isShow,
+                        badgeContent: Text(
+                          bagdeCount,
+                          style: const TextStyle(
+                            color: Colors.white,
+                          ),
+                        ),
+                        child: const Icon(
+                          Icons.shopping_cart_outlined,
+                          size: 40,
                         ),
                       ),
-                      child: const Icon(Icons.shopping_cart_outlined)),
+                    ),
+                  ],
                 ),
               ),
             ],
@@ -77,6 +100,7 @@ class _ItemsPageState extends State<ItemsPage> {
               return BlocBuilder<ShopBloc, ShopState>(
                 builder: (context, state) {
                   final status = state.getShoesStatus;
+
                   if (status == Status.success) {
                     return ListView.builder(
                       itemCount: state.shoes.length,
@@ -88,40 +112,43 @@ class _ItemsPageState extends State<ItemsPage> {
                         final price = shoes.retailPrice ?? 0;
                         final productId = shoes.goatProductId ?? 0;
 
-                        return ItemCard(
-                          isLike: isFavorite,
-                          img: image,
-                          itemName: shoeName,
-                          price: price,
-                          onClick: () {
-                            context.pushNamed(
-                              'Item-Details',
-                              extra: ItemDetailsParams(
-                                data: shoes,
-                                cartCubit: context.read<CartCubit>(),
-                              ),
-                            );
-                          },
-                          addToCart: () {
-                            context.read<CartCubit>().addToCart(shoes);
+                        return Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: ItemCard(
+                            isLike: isFavorite,
+                            img: image,
+                            itemName: shoeName,
+                            price: price,
+                            onClick: () {
+                              context.pushNamed(
+                                'Item-Details',
+                                extra: ItemDetailsParams(
+                                  data: shoes,
+                                  cartCubit: context.read<CartCubit>(),
+                                ),
+                              );
+                            },
+                            addToCart: () {
+                              context.read<CartCubit>().addToCart(shoes);
 
-                            ScaffoldMessenger.of(context)
-                              ..hideCurrentSnackBar()
-                              ..showSnackBar(_snackbar(shoeName));
-                          },
-                          addToFav: () {
-                            context.read<ShopBloc>().add(AddToFavorites(
-                                  isAdd: !isFavorite,
-                                  id: productId,
-                                ));
-                            if (!isFavorite) {
-                              context
-                                  .read<FavoriteCubit>()
-                                  .addToFavorite(shoes);
-                            } else {
-                              context.read<FavoriteCubit>().removeItem(shoes);
-                            }
-                          },
+                              ScaffoldMessenger.of(context)
+                                ..hideCurrentSnackBar()
+                                ..showSnackBar(_snackbar(shoeName));
+                            },
+                            addToFav: () {
+                              context.read<ShopBloc>().add(AddToFavorites(
+                                    isAdd: !isFavorite,
+                                    id: productId,
+                                  ));
+                              if (!isFavorite) {
+                                context
+                                    .read<FavoriteCubit>()
+                                    .addToFavorite(shoes);
+                              } else {
+                                context.read<FavoriteCubit>().removeItem(shoes);
+                              }
+                            },
+                          ),
                         );
                       },
                     );

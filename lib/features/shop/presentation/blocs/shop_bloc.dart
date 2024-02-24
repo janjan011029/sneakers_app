@@ -44,25 +44,7 @@ class ShopBloc extends Bloc<ShopEvent, ShopState> {
           final index =
               itemlist.indexWhere((e) => e.goatProductId == int.parse(fav));
           if (!index.isNegative) {
-            final item = itemlist[index];
-
-            itemlist[index] = ShoeApiResult(
-              brand: item.brand,
-              colorway: item.colorway,
-              description: item.description,
-              goatProductId: item.goatProductId,
-              id: item.id,
-              imageLinks: item.imageLinks,
-              lowestResellPrice: item.lowestResellPrice,
-              make: item.make,
-              releaseDate: item.releaseDate,
-              resellLinks: item.resellLinks,
-              retailPrice: item.retailPrice,
-              shoeName: item.shoeName,
-              silhoutte: item.silhoutte,
-              styleId: item.styleId,
-              thumbnail: item.thumbnail,
-              urlKey: item.urlKey,
+            itemlist[index] = itemlist[index].copyWith(
               isFavorite: true,
             );
           }

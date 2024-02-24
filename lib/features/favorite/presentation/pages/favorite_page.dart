@@ -1,6 +1,7 @@
 import 'package:badges/badges.dart' as badges;
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:go_router/go_router.dart';
 import 'package:sneakers_app/features/shop/presentation/pages/item_details.dart';
 
@@ -73,25 +74,45 @@ class _FavoritePageState extends State<FavoritePage> {
                 final img = item.thumbnail ?? '';
                 final isFavorite = item.isFavorite ?? false;
 
-                return ItemCard(
-                  itemName: itemName,
-                  price: price,
-                  img: img,
-                  isLike: isFavorite,
-                  onClick: () {
-                    context.pushNamed(
-                      'Item-Details',
-                      extra: ItemDetailsParams(
-                        data: item,
-                        cartCubit: context.read<CartCubit>(),
-                      ),
-                    );
-                  },
-                  addToFav: () =>
-                      context.read<FavoriteCubit>().removeItem(item),
-                  addToCart: () {
-                    context.read<CartCubit>().addToCart(item);
-                  },
+                return Padding(
+                  padding: const EdgeInsets.all(5.0),
+                  child: Slidable(
+                    endActionPane: ActionPane(
+                      extentRatio: 0.3,
+                      motion: const ScrollMotion(),
+                      children: [
+                        SlidableAction(
+                          borderRadius: BorderRadius.circular(10),
+                          onPressed: (context) =>
+                              context.read<FavoriteCubit>().removeItem(item),
+                          backgroundColor: Colors.black87,
+                          foregroundColor: Colors.white,
+                          icon: Icons.delete,
+                          label: 'Remove',
+                        ),
+                      ],
+                    ),
+                    child: ItemCard(
+                      itemName: itemName,
+                      price: price,
+                      img: img,
+                      isLike: isFavorite,
+                      onClick: () {
+                        context.pushNamed(
+                          'Item-Details',
+                          extra: ItemDetailsParams(
+                            data: item,
+                            cartCubit: context.read<CartCubit>(),
+                          ),
+                        );
+                      },
+                      addToFav: () =>
+                          context.read<FavoriteCubit>().removeItem(item),
+                      addToCart: () {
+                        context.read<CartCubit>().addToCart(item);
+                      },
+                    ),
+                  ),
                 );
               },
             );

@@ -11,7 +11,7 @@ class PromoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       height: 170,
-      width: double.infinity,
+      width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
         color: Colors.grey[100],
         borderRadius: const BorderRadius.all(
@@ -51,7 +51,7 @@ class PromoCard extends StatelessWidget {
                     '40%',
                     style: TextStyle(
                       fontWeight: FontWeight.bold,
-                      fontSize: 50,
+                      fontSize: 30,
                       color: Colors.black,
                     ),
                   ),
@@ -59,7 +59,7 @@ class PromoCard extends StatelessWidget {
                   Text(
                     'OFF',
                     style: TextStyle(
-                      fontSize: 40,
+                      fontSize: 24,
                       color: Colors.black,
                     ),
                   ),

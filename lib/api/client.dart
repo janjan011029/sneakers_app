@@ -4,7 +4,7 @@ class DioClient {
   late final Dio _dio;
 
   DioClient() {
-    const devUrl = 'http://192.168.1.3:4000';
+    const devUrl = 'http://192.168.1.5:4000';
 
     _dio = Dio(
       BaseOptions(

@@ -1,3 +1,4 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:json_annotation/json_annotation.dart';
 
 part 'shoe_api_result.g.dart';
@@ -49,6 +50,48 @@ class ShoeApiResult {
       _$ShoeApiResultFromJson(json);
 
   Map<String, dynamic> toJson() => _$ShoeApiResultToJson(this);
+
+  ShoeApiResult copyWith({
+    LowestResellPrice? lowestResellPrice,
+    List<dynamic>? imageLinks,
+    String? id,
+    String? shoeName,
+    String? brand,
+    String? silhoutte,
+    String? styleId,
+    String? make,
+    String? colorway,
+    int? retailPrice,
+    String? thumbnail,
+    String? releaseDate,
+    String? description,
+    String? urlKey,
+    ResellLinks? resellLinks,
+    int? goatProductId,
+    bool? isFavorite,
+    int? qty,
+  }) {
+    return ShoeApiResult(
+      lowestResellPrice: lowestResellPrice ?? this.lowestResellPrice,
+      imageLinks: imageLinks ?? this.imageLinks,
+      id: id ?? this.id,
+      shoeName: shoeName ?? this.shoeName,
+      brand: brand ?? this.brand,
+      silhoutte: silhoutte ?? this.silhoutte,
+      styleId: styleId ?? this.styleId,
+      make: make ?? this.make,
+      colorway: colorway ?? this.colorway,
+      retailPrice: retailPrice ?? this.retailPrice,
+      thumbnail: thumbnail ?? this.thumbnail,
+      releaseDate: releaseDate ?? this.releaseDate,
+      description: description ?? this.description,
+      urlKey: urlKey ?? this.urlKey,
+      resellLinks: resellLinks ?? this.resellLinks,
+      goatProductId: goatProductId ?? this.goatProductId,
+      isFavorite: isFavorite ?? this.isFavorite,
+      qty: qty ?? this.qty,
+    );
+  }
 }
 
 @JsonSerializable()

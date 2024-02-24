@@ -17,6 +17,7 @@ Welcome to the Sneakers App E-Commerce project! This application allows users to
 * Stripe API: Integration for secure online payments.
 * Firebase: Backend services for user authentication, database storage, and email notifications.
 * Bloc State Management: Utilizing the Bloc library for state management.
+* Repository Pattern: Utilizing the repository pattern for data management and abstraction.
 * Clean Architecture: Following the principles of Clean Architecture for organized and maintainable code.
 * GoRouter: Implementing the GoRouter package for navigation within the app.
 
